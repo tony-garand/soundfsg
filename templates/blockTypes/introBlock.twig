@@ -1,0 +1,11 @@
+{% if entry.introIcon|length %}
+{% set img = entry.introIcon.one() %}
+{% set imgCrop = { mode: 'crop', width: 60, height: 60, quality: 100 } %}
+     <span class="circle-image"><img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}"></span>
+{% endif %}
+{% if entry.introHeading|length %}
+     <h3>{{ entry.introHeading }}</h3>
+{% endif %}
+{% if entry.introText|length %}
+     {{ entry.introText }}
+{% endif %}

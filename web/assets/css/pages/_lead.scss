@@ -1,0 +1,15 @@
+/* Lead Page
+-----------------------------------------------------------------------*/
+
+/* Overrides */
+
+body.interior {
+    &.lead-page {
+        .page-header .header-content {
+            padding: 80px 0;
+        }
+    .page-section {
+         	padding: 60px 0;
+        }
+    }
+}

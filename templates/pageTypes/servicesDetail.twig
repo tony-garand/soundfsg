@@ -1,0 +1,64 @@
+{% extends "layouts/oneColumn" %}
+
+{% block bodyClass %}interior services-detail{% endblock %}
+
+{% block top %}
+<section class="page-header">
+	<div class="row align-middle align-center">
+		<div class="header-content">
+			<div class="large-6 medium-12 small-12 columns" style="float:left;">
+				<nav class="breadcrumbs" role="navigation">
+					<div class="row align-middle">
+						<div class="large-12 medium-12 small-12 columns">
+							{% include 'functions/breadcrumbs' %}
+						</div><!--columns-->
+					</div><!--row-->
+				</nav><!--breadcrumbs-->
+				<h1>{{ entry.title }}</h1>
+				<a href="#read-more" class="button large service-read-more" style="margin-right: 2vw;">Read More</a>
+				{% if entry.secondaryButton|length %}
+				<a href="{{ entry.secondaryButton }}" class="button no-arrow ghost large">{{ entry.secondaryButtonText }}</a>
+				{% endif %}
+			</div><!--columns-->
+			<div class="large-6 medium-12 small-12 columns service-detail-header-text" style="float:right;">
+				<h3>{{ entry.headerHeading }}</h3>
+				<p>{{ entry.headerText}}</p>
+			</div>
+		</div><!--header-content-->
+		{% if entry.headerBackgroundImage|length %}
+		{% set img = entry.headerBackgroundImage.one() %}
+		<div class="article-image large-12 medium-12 small-12" style="background-image: url('{{img.url}}');" alt="{{ img.altText|default(img.title) }}">
+		</div><!--post-image-->
+		{% endif %}
+	</div><!--row-->
+</section><!--page-header-->
+{% endblock %}
+{% block main %}
+<section class="page-section" id="read-more">
+	<div class="row section-row align-center">
+		<div class="large-8 large-order-1 medium-10 medium-order-1 small-12 small-order-1 column">
+			<div class="row section-row">
+				<div class="large-12 column">
+				{% for block in entry.pageContent.level(1).all() %}
+					<div class="column-content">
+					{% for block in block.children.all() %}
+						{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+					{% endfor %}
+					</div><!--column-content-->
+				{% endfor %}
+				</div><!--columns-->
+			</div><!--row-->
+		</div><!--columns-->
+		<aside class="large-4 large-order-2  medium-10 medium-order-2 small-12 small-order-2 column sidebar">
+			{% include 'components/relatedResourcesSidebar' %}
+		</aside><!--columns-->
+	</div><!--row-->
+</section><!--page-section-->
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

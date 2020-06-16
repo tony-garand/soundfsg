@@ -1,0 +1,99 @@
+{% extends "layouts/oneColumn" %}
+
+{% block bodyClass %}interior video video-page{% endblock %}
+
+{% block top %}
+{% include 'components/resourceHeader' %}
+{% endblock %}
+{% block main %}
+<section class="page-section video-section">
+	<div class="row section-row">
+		<div class="large-9 medium-12 small-12 column"><!--content-->
+			{% paginate craft.entries.section('videos').featured('1').limit(1) as info, posts %}
+			{% for post in posts %}
+			<article class="columns featured-video">
+				<div class="large-12 medium-12 small-12 featured-video-post">
+					{% if post.videoThumbnail|length %}
+					{% set img = post.videoThumbnail.one() %}
+						<a href="{{post.url}}" title="{{ post.title }}">
+							<div class="post-image large-6 medium-6 small-12" style="background-image: url('{{img.url}}');" alt="{{ img.altText|default(img.title) }}">
+						</a>
+						{% include 'includes/curveSide' %}
+						{% include 'includes/playButton' %}
+					</div><!--post-image-->
+					{% endif %}
+						<div class="post-content large-6 medium-6 small-12">
+						<h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+						<span class="post-meta">
+							<span class="date">{{ post.postDate|date('M j, Y') }}</span>
+						</span><!--post-meta-->
+						{% if post.videoExcerpt|length %}
+						<p>{{ post.videoExcerpt|chop(limit=200, unit='w') }}...</p>
+						{% endif %}
+						<a href="{{ post.url }}" title="{{ post.title }}" class="read-more">Watch Now</a>
+					</div><!--post-content-->
+					{% for cat in post.resourceCategories.all() %}
+					<span class="categories">
+						<a class="category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+					</span>
+					{% endfor %}
+				</div><!--video-post-->
+			</article><!--columns-->
+			{% endfor %}
+
+			{% paginate craft.entries.section('videos').featured('0').orderBy('postDate DESC').limit(6) as info, posts %}
+			{% for post in posts %}
+			<article class="large-4 medium-6 small-12 columns">
+				<div class="video-post">
+					{% if post.videoThumbnail|length %}
+					<div class="post-image">
+						{% set img = post.videoThumbnail.one() %}
+						{% set imgCrop = { mode: 'crop', width: 600, height: 400, quality: 100 } %}
+						<a href="{{ post.url }}" title="{{ post.title }}">
+							<img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}">
+						</a>
+						{% include 'includes/curveBottom' %}
+					</div><!--post-image-->
+					{% endif %}
+					<div class="post-content">
+						<span class="post-meta">
+							<span class="date">{{ post.postDate|date('M j, Y') }}</span>
+						</span><!--post-meta-->
+						<h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+						{% if post.videoExcerpt|length %}
+						<p>{{ post.videoExcerpt|chop(limit=10, unit='w') }}...</p>
+						{% endif %}
+						<a href="{{ post.url }}" title="{{ post.title }}" class="read-more">Watch Now</a>
+					</div><!--post-content-->
+					{% for cat in post.resourceCategories.all() %}
+					<span class="categories">
+						<a class="category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+					</span>
+					{% endfor %}
+				</div><!--video-post-->
+			</article><!--columns-->
+			{% endfor %}
+			{% if info.prevUrl or info.nextUrl %}
+			<nav class="large-12 medium-12 small-12 columns pagination">
+				<a class="button prev {{ not info.prevUrl ? 'unavailable' : '' }}" href="{{ info.prevUrl }}"></i> Prev</a>
+				{% for page, url in info.getPrevUrls(5) %}
+				<a class="button page" href="{{ url }}">{{ page }}</a>
+				{% endfor %}
+				<a class="button page current" href="#">{{ info.currentPage }}</a>
+				{% for page, url in info.getNextUrls(5) %}
+				<a class="button page" href="{{ url }}">{{ page }}</a>
+				{% endfor %}
+				<a class="button next {{ not info.nextUrl ? 'unavailable' : '' }}" href="{{ info.nextUrl }}">Next</a>
+			</nav>
+			{% endif %}
+		</div> <!--content-->
+		{% include 'components/resourceSidebar'%}
+	</div><!--row-->
+</section><!--page-section-->
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}
+
+{% block scripts %}{% endblock %}

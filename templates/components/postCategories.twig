@@ -1,0 +1,7 @@
+				<span class="categories">
+					{% if entry.resourceCategories|length %}
+					{% for cat in entry.resourceCategories.all() %}
+					<a class="category" href="{{ cat.url }}">{{ cat.title }}</a>
+					{% endfor %}
+					{% endif %}
+				</span>

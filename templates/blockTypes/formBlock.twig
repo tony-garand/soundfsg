@@ -1,0 +1,5 @@
+{% if entry.formBlock|length %}
+	<span class="form-block">
+		{{ craft.sproutForms.displayForm( entry.formBlock.one().handle ) }}
+	</span><!--form-block-->
+{% endif %}

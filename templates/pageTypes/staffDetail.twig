@@ -1,0 +1,53 @@
+{% extends "layouts/oneColumn" %}
+{% block bodyClass %}interior staff-details{% endblock %}
+{% block top %}
+<section class="page-header resouce">
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				<nav class="breadcrumbs" role="navigation">
+					<div class="row align-middle">
+						<div class="large-12 medium-12 small-12 columns">
+							{% include 'functions/breadcrumbs' %}
+						</div><!--columns-->
+					</div><!--row-->
+				</nav><!--breadcrumbs-->
+				<h2>Team</h2>
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--page-header-->
+{% endblock %}
+{% block main %}
+<section class="page-section">
+	<div class="row section-row">
+		<div class="staff-details-page large-9 medium-12 small-12 column">
+			<div class="staff-image-container large-3 medium-12 small-12 column">
+				{% if entry.staffImage|length %}
+				{% set img = entry.staffImage.one %}
+				{% set imgCrop = { mode: 'crop', width: 300, height: 300, quality: 100, position: 'top-center'} %}
+				<img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.height }}" alt="{{ img.altText|default(img.title) }}" class="staff-image" />
+				{% endif %}
+			</div><!--staff-content-->
+			<div class="staff-content large-9 medium-12 small-12 column">
+					<h1>{{ entry.title }}</h1>
+					<h3>	{{ entry.staffTitle }}</h3>
+			</div><!--columns-->
+			<div class="staff-bio large-12 medium-12 small-12 column">
+					<p>	{{ entry.staffBio }} </p>
+			</div>
+			<footer class="staff-footer">
+				<a href="{{ siteUrl }}about/team" class="button"><i class="fa fa-angle-left" aria-hidden="true"></i> Back to Team</a>
+			</footer><!--post-footer-->
+		</div><!--staff-details-page-->
+		<aside class="large-3 medium-12 small-12 column sidebar">
+			<div class="sidebar-block">
+				{% include 'functions/sectionnav' %}
+			</div><!--sidebar-block-->
+		</aside><!--sidebar-->
+	</div>
+</section>
+{% endblock %}
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}

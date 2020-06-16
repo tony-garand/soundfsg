@@ -1,0 +1,24 @@
+{% for block in entry.sliderContent.level(1).all() %}
+<div class="slide" {% if block.heroBackgroundColor|length %}style="background-color: {{ block.heroBackgroundColor }};"{% endif %}>
+<div class="row align-left">
+	<div class="large-6 medium-6 small-12 columns">
+		<div class="slide-content animate">
+            {% if block.heroHeading|length %}
+            <h1>{{ block.heroHeading }}</h1>
+            {% endif %}
+            {% if block.heroSubHeading|length %}
+            <h2>{{ block.heroSubHeading|replace({'<p>':'', '</p>':''})|raw }}</h2>
+            {% endif %}
+    		{% for entry in block.children.all() %}
+    		{% include 'blockTypes/' ~ entry.type %}
+    		{% endfor %}
+		</div><!--slide-content-->
+	</div><!--columns-->
+</div><!--row-->
+{% if block.heroBackgroundImage|length %}
+<div class="slide-image" style="background-image: url('{{ block.heroBackgroundImage.one().getURL() }}'); background-position: {{ block.heroBackgroundImagePosition }}; opacity: {{ block.heroBackgroundImageOpacity }}; background-size: {{ block.heroBackgroundImageSize }};">
+</div><!--hero-image-->
+{% endif %}
+{% include 'includes/curveBottom' %}
+</div><!--slide-->
+{% endfor %}

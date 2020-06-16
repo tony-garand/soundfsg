@@ -1,0 +1,12 @@
+{
+  "buttons": [
+    "html"
+  ],
+  "toolbarFixed": true,
+  "removeScript": false,
+  "replaceDivs": false,
+  "removeComments": false,
+  "breakline": true,
+  "autoparse": false,
+  "clean": false
+}

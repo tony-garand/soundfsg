@@ -1,0 +1,85 @@
+{% extends "layouts/oneColumn" %}
+{% block bodyClass %}interior staff staff-page{% endblock %}
+{% block top %}
+<section class="page-header">
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				<nav class="breadcrumbs" role="navigation">
+					<div class="row align-middle">
+						<div class="large-12 medium-12 small-12 columns">
+							{% include 'functions/breadcrumbs' %}
+						</div><!--columns-->
+					</div><!--row-->
+				</nav><!--breadcrumbs-->
+				<h1>{{ entry.title }}</h1>
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--page-header-->
+{% endblock %}
+{% block main %}
+<section class="page-section staff-section">
+	<div class="row section-row">
+		<div class="large-9 medium-12 small-12 column">
+			{% set staff = craft.entries.section('staff').orderBy('lft') %}
+			<div class="staff-category">
+				<h2>Advisors</h2>
+			</div>
+			{% for entry in staff.staffCategory('advisors').all() %}
+			<div class="medium-4 small-12 columns staff-block">
+			    <div class="staff-content">
+			        {% if entry.staffImage|length %}
+			        <div class="staff-image">
+			            {% set img = entry.staffImage.one() %}
+			            {% set imgCrop = { mode: 'crop', width: 300, height: 300, quality: 100, position: 'top-center' } %}
+			            <a href="{{ entry.url }}">
+			                <img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.height }}"  alt="{{ img.altText|default(img.title) }}" />
+			            </a>
+			        </div><!--staff-image-->
+			        {% endif %}
+			        <div class="staff-info">
+			            <h3><a href="{{ entry.url }}">{{ entry.title }}</a></h3>
+			            <p>{{ entry.staffTitle }}</p>
+			        </div><!--staff-excerpt-->
+			    </div><!--staff-block-->
+			</div><!--columns-->
+			{% endfor %}
+
+			<div class="staff-category" style="clear: both;">
+				<h2>Administration</h2>
+			</div>
+			{% for entry in staff.staffCategory('administration').all() %}
+			<div class="medium-4 small-12 columns staff-block">
+			    <div class="staff-content">
+			        {% if entry.staffImage|length %}
+			        <div class="staff-image">
+			            {% set img = entry.staffImage.one() %}
+			            {% set imgCrop = { mode: 'crop', width: 300, height: 300, quality: 100, position: 'top-center' } %}
+			            <a href="{{ entry.url }}">
+			                <img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.height }}"  alt="{{ img.altText|default(img.title) }}" />
+			            </a>
+			        </div><!--staff-image-->
+			        {% endif %}
+			        <div class="staff-info">
+			            <h3><a href="{{ entry.url }}">{{ entry.title }}</a></h3>
+			            <p>{{ entry.staffTitle }}</p>
+			        </div><!--staff-excerpt-->
+			    </div><!--staff-block-->
+			</div><!--columns-->
+			{% endfor %}
+		</div><!--Staff Section-->
+		<aside class="large-3 medium-12 small-12 column sidebar">
+			<div class="sidebar-block">
+				{% include 'functions/sectionnav' %}
+			</div><!--sidebar-block-->
+		</aside><!--sidebar-->
+	</div><!--row-->
+</section><!--page-section-->
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}
+
+{% block scripts %}{% endblock %}

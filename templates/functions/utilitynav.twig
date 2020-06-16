@@ -1,0 +1,20 @@
+{% set nav = craft.navigation.nodes('utilityNav').all() %}
+<ul>
+    {% nav node in nav %}
+        {% set nodeClasses = [] %}
+        {% if node.hasDescendants %}
+        	{% set nodeClasses = nodeClasses|merge(['has-children']) %}
+        {% endif %}
+		<li {% if nodeClasses|length %}class="{{ nodeClasses|join(' ') }}"{% endif %}>
+            <a href="{{ node.url }}" class="{% if node.active %}active {% endif %} {{ node.classes }}"  {% if node.newWindow %}target="_blank" {% endif %} {% if siteUrl not in node.url %}rel="nofollow" {% endif %}>
+            {{ node.title }}
+            </a>
+            {% ifchildren %}
+                <ul>
+                    {% children %}
+                </ul>
+            {% endifchildren %}
+        </li>
+    {% endnav %}
+    <li class="search-icon"><a data-fancybox data-src="#search-modal" href="javascript:;">Search  <i class="nucleo nucleo-small icon-zoom-2" style="padding-left:10px;"></i></a></li>
+</ul>

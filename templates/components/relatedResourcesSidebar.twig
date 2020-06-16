@@ -1,0 +1,125 @@
+
+<div class="row align-center">
+	<section class="large-12 medium-12 small-12 column related-resources-sidebar">
+		<h3 style="font-size:28px; text-align: left;">Related Resources</h3>
+		{% if entry.resourceCategories is empty %}
+		{% paginate craft.entries.section('articles').orderBy('postDate DESC').limit(2) as info, posts %}
+		{% else %}
+		{% paginate craft.entries.section('articles').relatedTo(entry.resourceCategories).orderBy('postDate DESC').limit(2) as info, posts %}
+		{% endif %}
+		{% for post in posts %}
+		<article class="large-12 medium-12 small-12">
+		     <div class="article-post">
+		          {% if post.articleImage|length %}
+		          <div class="post-image">
+		               {% set img = post.articleImage.one() %}
+		               {% set imgCrop = { mode: 'crop', width: 100, height: 100, quality: 100 } %}
+		               <a href="{{ post.url }}" title="{{ post.title }}">
+		                    <img src="{{ img.getUrl(imgCrop) }}" width="{{ img.getWidth(imgCrop) }}" height="{{ img.getHeight(imgCrop) }}" alt="{{ img.altText|default(img.title) }}">
+		               </a>
+		          </div><!--post-image-->
+		          {% endif %}
+		          <div class="post-content">
+		               <h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+									 <span class="post-meta">
+												<span class="date">{{ post.postDate|date('M j, Y') }}</span>
+									 </span><!--post-meta-->
+		               <a href="{{ post.url }}" title="{{ post.title }}" class="read-more">Read More</a>
+		          </div><!--post-content-->
+		          {% for cat in post.resourceCategories.all() %}
+		          <span class="categories">
+		               <a class="category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+		          </span>
+		          {% endfor %}
+		     </div><!--article-post-->
+		</article><!--columns-->
+		{% endfor %}
+	</section>
+	<section class="large-12 medium-12 small-12 column related-resources-sidebar">
+		{% if entry.resourceCategories is empty %}
+		{% paginate craft.entries.section('podcasts').orderBy('postDate DESC').limit(2) as info, posts %}
+		{% else %}
+		{% paginate craft.entries.section('podcasts').relatedTo(entry.resourceCategories).orderBy('postDate DESC').limit(2) as info, posts %}
+		{% endif %}
+		{% for post in posts %}
+		<article class="large-12 medium-12 small-12" style="float:left;">
+			<div class="podcast-post">
+				<div class="post-image">
+					<a href="{{post.url}}" title="{{ post.title }}">
+						<div class="podcast-image" alt="podcast-link"></div>
+					</a>
+				</div><!--post-image-->
+				<div class="podcast-content">
+					<span class="post-meta">
+						<span class="date">{{ post.postDate|date('M j, Y') }}</span>
+					</span><!--post-meta-->
+					{% for cat in post.resourceCategories.all() %}
+					<span>
+						<a class="podcast-category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+					</span>
+					{% endfor %}
+					<h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+				</div><!--post-content-->
+			</div><!--podcast-post-->
+		</article><!--columns-->
+		{% endfor %}
+	</section>
+	<section class="large-12 medium-12 small-12 column related-resources-sidebar">
+		{% if entry.resourceCategories is empty %}
+		{% paginate craft.entries.section('books').orderBy('postDate DESC').limit(2) as info, posts %}
+		{% else %}
+		{% paginate craft.entries.section('books').relatedTo(entry.resourceCategories).orderBy('postDate DESC').limit(2) as info, posts %}
+		{% endif %}
+		{% for post in posts %}
+		<article class="large-12 medium-12 small-12" style="float:left;">
+		  <div class="book-post">
+		    <div class="post-image">
+		      <a href="{{post.url}}" title="{{ post.title }}">
+		        <div class="book-image" alt="book-link"></div>
+		      </a>
+		    </div><!--post-image-->
+		    <div class="book-content">
+		      {% for cat in post.resourceCategories.all() %}
+		      <span>
+		        <a class="book-category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+		      </span>
+		      {% endfor %}
+		      <h3><a href="{{ post.url| raw }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+		    </div><!--post-content-->
+		  </div><!--book-post-->
+		</article><!--columns-->
+		{% endfor %}
+	</section>
+	<section class="large-12 medium-12 small-12 column related-resources-sidebar">
+		{% if entry.resourceCategories is empty %}
+		{% paginate craft.entries.section('videos').orderBy('postDate DESC').limit(1) as info, posts %}
+		{% else %}
+		{% paginate craft.entries.section('videos').relatedTo(entry.resourceCategories).orderBy('postDate DESC').limit(2) as info, posts %}
+		{% endif %}
+		{% for post in posts %}
+		<article class="large-12 medium-12 small-12 featured-video">
+			<div class="featured-video-post">
+				{% if post.videoThumbnail|length %}
+				{% set img = post.videoThumbnail.one() %}
+					<a href="{{post.url}}" title="{{ post.title }}">
+						<div class="post-image large-12 medium-6 small-12" style="background-image: url('{{img.url}}');" alt="{{ img.altText|default(img.title) }}">
+					</a>
+				</div><!--post-image-->
+				{% endif %}
+					<div class="post-content large-12 medium-6 small-12">
+					<h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+					<span class="post-meta">
+						<span class="date">{{ post.postDate|date('M j, Y') }}</span>
+					</span><!--post-meta-->
+					<a href="{{ post.url }}" title="{{ post.title }}" class="read-more">Watch Now</a>
+					{% for cat in post.resourceCategories.all() %}
+					<span class="categories">
+						<a class="category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+					</span>
+					{% endfor %}
+				</div><!--post-content-->
+			</div><!--video-post-->
+		</article><!--columns-->
+		{% endfor %}
+	</section>
+</div>

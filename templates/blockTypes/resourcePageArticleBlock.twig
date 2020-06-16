@@ -1,0 +1,55 @@
+<div class="large-1 medium-0 small-0">
+</div>
+<div class="large-4 medium-6 small-12" style="float:right;">
+  <div class="section-content" style="height:560px; position:relative;">
+    {% if block.sectionHeaderHeading|length %}
+    <h2>{{ block.sectionHeaderHeading }}</h2>
+    {% endif %}
+    {% if block.sectionHeaderText|length %}
+    {{ block.sectionHeaderText }}
+    {% endif %}
+    {% if block.sectionFooterButtonText|length %}
+    <a href="{{ siteUrl }}resources/{{ block.sectionFooterButtonUrl }}" class="button resource-article-button" style="width:220px; bottom:0; position:absolute;">{{ block.sectionFooterButtonText }}</a>
+    {% endif %}
+  </div>
+</div>
+<div class="large-7 medium-6 small-12 resource-article-section">
+  <div class="main-carousel" id="article-carousel" data-flickity='{ "wrapAround": true, "cellAlign": "left", "contain": true, "draggable": true, "pageDots": false, "autoPlay": 5000, "prevNextButtons": true }'>
+    {% if block.resourceCategories is empty %}
+    {% paginate craft.entries.section('articles').orderBy('postDate DESC').limit(6) as info, posts %}
+    {% else %}
+    {% paginate craft.entries.section('articles').relatedTo(block.resourceCategories).orderBy('postDate DESC').limit(6) as info, posts %}
+    {% endif %}
+    {% for post in posts %}
+    <div class="carousel-cell column">
+      <article class="article-post">
+                {% if post.articleImage|length %}
+                <div class="post-image">
+                     {% set img = post.articleImage.one() %}
+                     {% set imgCrop = { mode: 'crop', width: 600, height: 400, quality: 100 } %}
+                     <a href="{{ post.url }}" title="{{ post.title }}">
+                          <img src="{{ img.url }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}">
+                     </a>
+                {% include 'includes/curveBottom' %}
+                </div><!--post-image-->
+                {% endif %}
+                <div class="post-content">
+                     <span class="post-meta">
+                          <span class="date">{{ post.postDate|date('M j, Y') }}</span>
+                     </span><!--post-meta-->
+                     <h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+                     {% if post.articleExcerpt|length %}
+                     <p>{{ post.articleExcerpt|chop(limit=10, unit='w') }}...</p>
+                     {% endif %}
+                     <a href="{{ post.url }}" title="{{ post.title }}" class="read-more">Read More</a>
+                </div><!--post-content-->
+                {% for cat in post.resourceCategories.all() %}
+                <span class="categories">
+                     <a class="category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+                </span>
+                {% endfor %}
+      </article><!--article-post-->
+    </div><!--columns-->
+    {% endfor %}
+  </div>
+</div

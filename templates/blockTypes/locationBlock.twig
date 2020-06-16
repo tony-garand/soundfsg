@@ -1,0 +1,8 @@
+<div>
+  {% if entry.headingBlock|length %}
+       <h2 class="location-h2">{{ entry.headingBlock }}</h2>
+  {% endif %}
+  {% if entry.textBlock|length %}
+       {{ entry.textBlock }}
+  {% endif %}
+</div>

@@ -1,0 +1,9 @@
+{% if socialMedia.globalSocialMedia|length %}
+	<nav class="socialnav" role="navigation">
+		<ul>
+		{% for soc in socialMedia.globalSocialMedia.all() %}
+			<li><a href="{{ soc.socialMediaUrl }}" class="button social-button" target="_blank"><i class="fa fa-{{ soc.socialMediaType }}" aria-hidden="true"></i></a></li>
+		{% endfor %}
+		</ul>
+	</nav><!--socialnav-->
+{% endif %}

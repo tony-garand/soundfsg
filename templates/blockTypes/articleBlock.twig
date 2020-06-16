@@ -1,0 +1,36 @@
+{% if block.resourceCategories is empty %}
+{% paginate craft.entries.section('articles').orderBy('postDate DESC').limit(4) as info, posts %}
+{% else %}
+{% paginate craft.entries.section('articles').relatedTo(block.resourceCategories).orderBy('postDate DESC').limit(3) as info, posts %}
+{% endif %}
+{% for post in posts %}
+<article class="large-3 medium-5 small-12 align-center columns">
+     <div class="article-post">
+          {% if post.articleImage|length %}
+          <div class="post-image">
+               {% set img = post.articleImage.one() %}
+               {% set imgCrop = { mode: 'crop', width: 600, height: 400, quality: 100 } %}
+               <a href="{{ post.url }}" title="{{ post.title }}">
+                    <img src="{{ img.url }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}">
+               </a>
+          {% include 'includes/curveBottom' %}
+          </div><!--post-image-->
+          {% endif %}
+          <div class="post-content">
+               <span class="post-meta">
+                    <span class="date">{{ post.postDate|date('M j, Y') }}</span>
+               </span><!--post-meta-->
+               <h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+               {% if post.articleExcerpt|length %}
+               <p>{{ post.articleExcerpt|chop(limit=10, unit='w') }}...</p>
+               {% endif %}
+               <a href="{{ post.url }}" title="{{ post.title }}" class="read-more">Read More</a>
+          </div><!--post-content-->
+          {% for cat in post.resourceCategories.all() %}
+          <span class="categories">
+               <a class="category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+          </span>
+          {% endfor %}
+     </div><!--article-post-->
+</article><!--columns-->
+{% endfor %}

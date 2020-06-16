@@ -1,0 +1,63 @@
+{% extends "layouts/oneColumn" %}
+{% block bodyClass %}interior video post-page{% endblock %}
+{% set parent = craft.entries.section('pages').slug(craft.app.request.segments).one() %}
+{% block top %}
+<section class="page-header" style="padding-top:60px;">
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<nav class="breadcrumbs" role="navigation">
+				<div class="row align-middle">
+					<div class="large-12 medium-12 small-12 columns">
+						{% include 'functions/breadcrumbs' %}
+					</div><!--columns-->
+				</div><!--row-->
+			</nav><!--breadcrumbs-->
+			<div class="header-content">
+				<h1>{{ entry.title }}</h1>
+				<span class="date">
+					{{ entry.postDate|date('F j, Y') }}
+				</span>
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--page-header-->
+{% endblock %}
+{% block main %}
+<section class="post-section video-post-page">
+	<div class="row align-center">
+		<article>
+			<div class="large-12 medium-10 small-12 column">
+				{% set embed = craft.videoEmbedder.getEmbedUrl( entry.videoLink, {autoplay: 0, rel: 0, theme: 'dark'}) %}
+				{% if embed|length %}
+				    <span id="video" class="video video-block">
+				        <iframe src="{{ embed }}"></iframe>
+				    </span>
+				{% endif %}
+			</div><!--post-content-->
+			<div class="post-content large-9 medium-10 small-12 column" style="margin:auto;">
+					{{ entry.videoContent }}
+					<footer class="post-footer">
+						<div class="share-post" style="float:left;">
+							{% include 'components/socialMedia' %}
+						</div>
+						<div class="post-categories" style="float:right;">
+							{% include 'components/postCategories' %}
+						</div>
+					</footer><!--post-footer-->
+			</div>
+		</article><!--video-post-->
+	</div><!--row-->
+	<div class="row align-center">
+		<div class="large-9 medium-10 small-12 column" style="margin:auto;">
+		{% include 'components/postAuthor' %}
+		</div>
+	</div><!--row-->
+</section><!--page-content-->
+{% include 'includes/newsletter' %}
+{% if entry.resourceCategories|length %}
+{% include 'components/relatedResources' %}
+{% endif %}
+{% endblock %}
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}

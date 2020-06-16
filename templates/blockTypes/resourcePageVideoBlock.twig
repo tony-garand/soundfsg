@@ -1,0 +1,56 @@
+<div class="large-1 medium-0 small-0">
+</div>
+<div class="large-4 medium-6 small-12 column" style="float:right;">
+  <div class="section-content" style="height:440px; position:relative;">
+    {% if block.sectionHeaderHeading|length %}
+    <h2>{{ block.sectionHeaderHeading }}</h2>
+    {% endif %}
+    {% if block.sectionHeaderText|length %}
+    {{ block.sectionHeaderText }}
+    {% endif %}
+    {% if block.sectionFooterButtonText|length %}
+    <a href="{{ siteUrl }}resources/{{ block.sectionFooterButtonUrl }}" class="button resource-video-button" style="width:220px; bottom:0; position:absolute;">{{ block.sectionFooterButtonText }}</a>
+    {% endif %}
+  </div>
+</div>
+<div class="large-7 medium-6 small-12 resource-video-section">
+  <div class="main-carousel" id="video-carousel" data-flickity='{ "wrapAround": true, "cellAlign": "left", "contain": true, "draggable": true, "pageDots": false, "autoPlay": 5000, "prevNextButtons": true }'>
+    {% if block.resourceCategories is empty %}
+    {% paginate craft.entries.section('videos').orderBy('postDate DESC').limit(6) as info, posts %}
+    {% else %}
+    {% paginate craft.entries.section('videos').relatedTo(block.resourceCategories).orderBy('postDate DESC').limit(6) as info, posts %}
+    {% endif %}
+    {% for post in posts %}
+    <div class="carousel-cell column">
+      <article class="columns featured-video">
+        <div class="featured-video-post">
+          {% if post.videoThumbnail|length %}
+          {% set img = post.videoThumbnail.one() %}
+            <a href="{{post.url}}" title="{{ post.title }}">
+              <div class="post-image large-7 medium-6 small-12" style="background-image: url('{{img.url}}');" alt="{{ img.altText|default(img.title) }}">
+            </a>
+          {% include 'includes/curveSide' %}
+          {% include 'includes/playButton' %}
+          </div><!--post-image-->
+          {% endif %}
+            <div class="post-content large-5 medium-6 small-12">
+            <h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+            <span class="post-meta">
+              <span class="date">{{ post.postDate|date('M j, Y') }}</span>
+            </span><!--post-meta-->
+            {% if post.videoExcerpt|length %}
+            <p>{{ post.videoExcerpt|chop(limit=100, unit='w') }}...</p>
+            {% endif %}
+            <a href="{{ post.url }}" title="{{ post.title }}" class="read-more">Watch Now</a>
+          </div><!--post-content-->
+          {% for cat in post.resourceCategories.all() %}
+          <span class="categories">
+            <a class="category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+          </span>
+          {% endfor %}
+        </div><!--video-post-->
+      </article><!--columns-->
+    </div><!--columns-->
+    {% endfor %}
+  </div>
+</div

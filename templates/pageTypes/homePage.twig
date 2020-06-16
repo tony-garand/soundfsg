@@ -1,0 +1,221 @@
+{% extends "layouts/home" %}
+
+{% block bodyClass %}home{% endblock %}
+
+{% block top %}
+<section class="hero-section slider">
+	{% include 'functions/slider' %}
+</section><!--page-header-->
+{% endblock %}
+
+{% block main %}
+{% for block in entry.homeSections.level(1).all() %}
+
+{% switch block.type %}
+
+{% case 'introSection' %}
+
+<section class="page-section intro-section">
+	<header class="row section-header">
+		<div class="large-12 medium-12 small-12 columns">
+			{% if block.sectionHeaderHeading|length %}
+			<h2>{{ block.sectionHeaderHeading }}</h2>
+			{% endif %}
+		</div><!--columns-->
+	</header><!--section-header-->
+
+	<div class="row align-center section-row">
+		{% for block in block.children.all() %}
+		<div class="large-4 medium-12 small-12 column">
+			<div class="content-block">
+				{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+			</div><!--content-block-->
+		</div><!--columns-->
+		{% endfor %}
+	</div><!--row-->
+</section><!--into-section-->
+
+{% case 'servicesSection' %}
+
+<section class="page-section services-section">
+	<header class="row section-header">
+		<div class="large-12 medium-12 small-12 columns">
+			{% if block.sectionHeaderHeading|length %}
+			<h2>{{ block.sectionHeaderHeading }}</h2>
+			<h3>{{ block.sectionHeaderSubHeading }}</h3>
+			<div style="max-width:680px; margin:auto;">{{ block.sectionHeaderText }}</div>
+			{% endif %}
+		</div><!--columns-->
+	</header><!--section-header-->
+
+	<div class="row section-row">
+		<div class="main-carousel" id="main-services-carousel"
+		data-flickity='{ "wrapAround": true, "cellAlign": "left", "contain": true, "draggable": true, "pageDots": true, "autoPlay": 5000, "prevNextButtons": false, "watchCSS": true }'>
+		{% for block in block.children.all() %}
+		<div class="large-4 medium-4 small-12 column carousel-cell" id="home-page-service-section">
+			<div class="content-block">
+				{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+			</div><!--content-block-->
+		</div><!--columns-->
+		{% endfor %}
+	</div><!--row-->
+
+	<footer class="row align-center section-footer">
+		<div class="large-12 medium-12 small-12 columns">
+			<a href="/services" class="button large ghost">All Services</a>
+		</div><!--columns-->
+	</footer ><!--section-header-->
+</section><!--service-section-->
+
+{% case 'callOutSection' %}
+
+<section class="page-section callout-section">
+	<div class="row section-row align-middle align-center">
+		{% for block in block.children.all() %}
+		<div class="large-10 medium-12 small-12 column">
+			<div class="content-block">
+				{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+			</div><!--content-block-->
+		</div><!--columns-->
+		{% endfor %}
+	</div><!--row-->
+</section><!--callout-section-->
+
+{% case 'splitSection' %}
+
+<section class="page-section split-section" id="{{ loop.index }}">
+	<div class="row section-row align-center">
+		{% for block in block.children.all() %}
+			{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+		{% endfor %}
+	</div><!--row-->
+</section><!--callout-section-->
+
+{% case 'testimoniesSection' %}
+
+<section class="page-section testimonies-section">
+	<header class="row section-header">
+		<div class="large-12 medium-12 small-12 columns">
+			{% if block.sectionHeaderHeading|length %}
+			<h2>{{ block.sectionHeaderHeading }}</h2>
+			{% endif %}
+		</div><!--columns-->
+	</header><!--section-header-->
+
+	<div class="row section-row align-middle align-center">
+		{% for block in block.children.all() %}
+		<div class="large-4 medium-12 small-12 column">
+			<div class="content-block">
+				{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+			</div><!--content-block-->
+		</div><!--columns-->
+		{% endfor %}
+	</div><!--row-->
+</section><!--testimonies-section-->
+
+{% case 'advisorSection' %}
+
+<section class="page-section advisor-section">
+<div class="advisor-section-background" style="background: url('{{ block.sectionBackgroundImage.one().getUrl() }}') no-repeat;">
+	{% include 'includes/curveTop' %}
+		<div class="row" id="advisor-row">
+			<div class="large-6 medium-10 small-12 columns advisor-section-content">
+				<div class="section-container">
+					{% if block.sectionHeaderHeading|length %}
+					<h2>{{ block.sectionHeaderHeading|replace({'<p>':'', '</p>':''})|raw }}</h2>
+					{% endif %}
+					{% if block.sectionHeaderSubHeading|length %}
+					<h3>{{ block.sectionHeaderSubHeading|replace({'<p>':'', '</p>':''})|raw }}</h3>
+					{% endif %}
+					<div class="section-content">
+						{% if block.sectionHeaderText|length %}
+						{{ block.sectionHeaderText }}
+						{% endif %}
+						{% if block.sectionFooterText|length %}
+						{{ block.sectionFooterText }}
+						{% endif %}
+						{% if block.sectionFooterButtonText|length %}
+					  <a href="tel:{{ block.sectionFooterButtonUrl }}" class="button advisor-button">{{ block.sectionFooterButtonText }}</a>
+						{% endif %}
+					</div>
+				</div>
+			</div><!--columns-->
+		</div><!--row-->
+	{% include 'includes/curveBottom' %}
+</div>
+</section><!--testimonies-section-->
+
+{% case 'resourceSection' %}
+
+<section class="page-section resource-section">
+	<header class="row section-header">
+		<div class="large-12 medium-12 small-12 columns">
+			{% if block.sectionHeaderHeading|length %}
+			<h2>{{ block.sectionHeaderHeading }}</h2>
+			{% endif %}
+		</div><!--columns-->
+	</header><!--section-header-->
+	<!-- if there is articles show -->
+	{% if craft.entries().section('articles').all()|length %}
+		<div class="row section-row align-center">
+			<div id="home-article-section" class="large-12 medium-10 small-12 columns">
+				<h3 style="float:left;">Articles</h3><a href="{{ siteUrl }}resources/articles/" style="font-weight:600; float: right;" class="resource-read-more button ghost">View All</a>
+			</div>
+		</div>
+		<div class="row section-row align-center article-section">
+			{% include 'blockTypes/articleBlock' %}
+		</div><!--row-->
+	{% endif %}
+
+	<div class="row section-row align-center"><!-- podcast and book section-->
+	<!-- if there is podcasts show -->
+	{% if craft.entries().section('podcasts').all()|length %}
+		<div id="home-podcast-section" class="large-6 medium-10 align-center small-12 columns">
+			<div class="row columns">
+				<h3 style="float:left;">Podcasts</h3><a href="{{ siteUrl }}resources/podcasts/" style="font-weight:600; float: right;" class="resource-read-more button ghost">View All</a>
+			</div>
+			<div class="row columns section-row" id="podcast-section" style="clear:both; border-bottom: 1px solid;">
+					{% include 'blockTypes/podcastBlock' %}
+			</div><!--row-->
+		</div>
+		{% endif %}
+
+		<!-- if there is Books show -->
+		{% if craft.entries().section('books').all()|length %}
+		<div id="home-books-section" class="large-6 medium-10 align-center small-12 columns">
+			<div class="row columns">
+				<h3 style="float:left;">Books</h3><a href="{{ siteUrl }}resources/books/" style="font-weight:600; float: right;" class="resource-read-more button ghost">View All</a>
+			</div>
+			<div class="row columns section-row" id="book-section" style="clear:both; border-bottom: 1px solid;">
+					{% include 'blockTypes/bookBlock' %}
+			</div><!--row-->
+		</div>
+		{% endif %}
+
+	</div><!-- podcast and book section-->
+	<!-- if there is videos show -->
+	{% if craft.entries().section('videos').all()|length %}
+		<div class="row section-row">
+			<div id="home-video-section" class="large-12 medium-12 small-12 columns">
+				<h3 style="float:left;">Videos</h3><a href="{{ siteUrl }}resources/videos/" style="font-weight:600; float: right;" class="resource-read-more button ghost">View All</a>
+			</div>
+		</div>
+		<div class="row section-row" id="video-section">
+			{% include 'blockTypes/videoResouceBlock' %}
+		</div><!--row-->
+	{% endif %}
+
+</section><!--resource-section-->
+{% include 'includes/newsletter' %}
+{% endswitch %}
+
+{% endfor %}
+{% endblock %}
+
+{% block bottom %}
+{% if callToAction.ctaHeading|length or callToAction.ctaText|length %}
+{% include 'includes/global-cta' %}
+{% endif %}
+{% endblock %}
+
+{% block scripts %}{% endblock %}

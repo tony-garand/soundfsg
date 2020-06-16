@@ -1,0 +1,33 @@
+{% set title = entry.title|default('') == '' ? siteName : entry.title ~ ' - ' ~ siteName %}
+<meta charset="utf-8">
+<!--Meta-->
+{% hook 'seomaticRender' %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% set favicon = settings.faviconUpload %}
+{% if favicon|length %}
+<link type="image/png" rel="icon" href="{{ favicon.one().getUrl() }}" sizes="16x16">
+<link type="image/png" rel="icon" href="{{ favicon.one().getUrl() }}" sizes="24x24">
+{% endif %}
+<link type="image/png" rel="apple-touch-icon" href="/assets/images/icons/icon-32x32.png" sizes="32x32">
+<link type="image/png" rel="apple-touch-icon" href="/assets/images/icons/icon-58x58.png" sizes="57x57">
+<link type="image/png" rel="apple-touch-icon" href="/assets/images/icons/icon-60x60.png" sizes="60x60">
+<link type="image/png" rel="apple-touch-icon" href="/assets/images/icons/icon-72x72.png" sizes="72x72">
+<link type="image/png" rel="apple-touch-icon" href="/assets/images/icons/icon-76x76.png" sizes="76x76">
+<link type="image/png" rel="apple-touch-icon" href="/assets/images/icons/icon-114x114.png" sizes="114x114">
+<link type="image/png" rel="apple-touch-icon" href="/assets/images/icons/icon-120x120.png" sizes="120x120">
+<link type="image/png" rel="apple-touch-icon" href="/assets/images/icons/icon-144x144.png" sizes="144x144">
+<!--Styles-->
+<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+{% if settings.googleFontCode is defined and settings.googleFontCode is not empty %}
+    {{ settings.googleFontCode|raw }}
+{% endif %}
+{% if settings.adobeTypekitFontCode is defined and settings.adobeTypekitFontCode is not empty %}
+    {{ settings.adobeTypekitFontCode|raw }}
+{% endif %}
+{% if settings.googleAnalyticsCode is defined and settings.googleAnalyticsCode is not empty %}
+    {{ settings.googleAnalyticsCode|raw }}
+{% endif %}
+{% filter automin('scss', 'rel="stylesheet"') %}
+<link rel="stylesheet" href="/assets/css/main.scss">
+{% endfilter %}

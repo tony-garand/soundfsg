@@ -1,0 +1,31 @@
+<section class="page-section cta-section" {% if callToAction.sectionBackgroundColor|length %}style="background-color: {{ callToAction.sectionBackgroundColor }};"{% endif %}>
+	<div class="row section-row align-center align-middle">
+		<div class="large-11 medium-11 small-12 columns">
+            <div class="row align-middle">
+				<div class="large-12 medium-12 small-12 columns">
+					<div class="column-content cta-content">
+					{% if callToAction.ctaHeading|length %}
+						<h2>{{ callToAction.ctaHeading }}</h2>
+					{% endif %}
+					{% if callToAction.ctaText|length %}
+						{{ callToAction.ctaText }}
+					{% endif %}
+					</div><!--content-block-->
+				</div><!--columns-->
+				<div class="large-12 medium-12 small-12 columns">
+					<div class="column-content cta-buttons">
+					{% if callToAction.ctaButtonText %}
+						<a href="{{ callToAction.ctaButtonUrl }}" class="button {{ callToAction.ctaButtonSize ?? '' }} {{ callToAction.ctaButtonStyle ?? '' }}" {% if callToAction.openLinkInNewWindow|length %}target="_blank" rel="nofollow"{% endif %}>{{ callToAction.ctaButtonText }}</a>
+					{% endif %}
+					{% if callToAction.ctaCallText|length %}
+						{{ callToAction.ctaCallText }}
+					{% endif %}
+					</div><!--content-block-->
+				</div><!--columns-->
+            </div><!--row-->
+        </div><!--columns-->
+    </div><!--row-->
+	{% if callToAction.sectionBackgroundImage|length %}
+		<div class="section-image" style="background-image: url('{{ callToAction.sectionBackgroundImage.one().getURL() }}');background-position: {{ callToAction.sectionBackgroundImagePosition }}; background-size: {{ callToAction.sectionBackgroundImageSize }}; background-repeat: {{ callToAction.sectionBackgroundImageRepeat }}; opacity: {{ callToAction.sectionBackgroundImageOpacity }}; "></div><!--section-image-->
+	{% endif %}
+</section><!--cta-section-->

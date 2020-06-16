@@ -1,0 +1,24 @@
+{% if block.resourceCategories is empty %}
+{% paginate craft.entries.section('books').orderBy('postDate DESC').limit(2) as info, posts %}
+{% else %}
+{% paginate craft.entries.section('books').relatedTo(block.resourceCategories).orderBy('postDate DESC').limit(2) as info, posts %}
+{% endif %}
+{% for post in posts %}
+<article class="large-6 medium-6 small-12" style="float:left;">
+  <div class="book-post">
+    <div class="post-image">
+      <a href="{{post.url}}" title="{{ post.title }}">
+        <div class="book-image" alt="book-link"></div>
+      </a>
+    </div><!--post-image-->
+    <div class="book-content">
+      {% for cat in post.resourceCategories.all() %}
+      <span>
+        <a class="book-category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+      </span>
+      {% endfor %}
+      <h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+    </div><!--post-content-->
+  </div><!--book-post-->
+</article><!--columns-->
+{% endfor %}

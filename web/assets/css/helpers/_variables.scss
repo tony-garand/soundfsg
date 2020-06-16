@@ -1,0 +1,58 @@
+/* Variables */
+
+/* Colors
+-----------------------------------------------------------------------*/
+
+/* Primary*/
+
+$color-primary: #4A90E2;
+$color-secondary: #FFF5D3;
+$color-extra: #022047;
+$color-extra-2:#E3F1FD;
+$color-black: #1d1f21;
+$color-font-header: #022047;
+$color-font-black: #0B0B0B;
+$color-white: #ffffff;
+$color-dark-grey: #333;
+$color-medium-grey: #666;
+$color-light-grey: #f5f6f8;
+
+/* Font Styling
+-----------------------------------------------------------------------*/
+
+/* Primary Font Family */
+
+$font-primary: 'Source Serif Pro', serif;
+$font-primary-extra-light: 200;
+$font-primary-light: 300;
+$font-primary-regular: 400;
+$font-primary-medium: 500;
+$font-primary-semibold: 600;
+$font-primary-bold: 700;
+
+/* Secondary Font Family */
+
+$font-secondary: 'Open Sans', sans-serif;
+$font-secondary-extra-light: 200;
+$font-secondary-light: 300;
+$font-secondary-regular: 400;
+$font-secondary-medium: 500;
+$font-secondary-semibold: 600;
+$font-secondary-bold: 700;
+
+/* Animations / Transitions / Effects
+-----------------------------------------------------------------------*/
+
+$transitions-primary: all 400ms cubic-bezier(0.645, 0.045, 0.355, 1);
+$shadow-depth-1: 0 2px 4px rgba(0,0,0,0.10);
+$shadow-depth-2: 0 5px 10px rgba(0,0,0,0.10), 0 10px 20px rgba(0,0,0,0.15);
+$shadow-depth-3: 0 10px 20px rgba(0,0,0,0.10), 0 20px 40px rgba(0,0,0,0.15);
+$shadow-depth-4: 0 10px 30px rgba(0,0,0,0.10), 0 30px 60px rgba(0,0,0,0.15);
+$shadow-depth-5: 0 20px 40px rgba(0,0,0,0.10), 0 40px 80px rgba(0,0,0,0.15);
+
+/* Responsive Break Points
+-----------------------------------------------------------------------*/
+
+$responsive-large: 77.5rem; /* (1240px) */
+$responsive-medium: 60rem; /* (1140px) */
+$responsive-small: 540px; /* (1140px) */

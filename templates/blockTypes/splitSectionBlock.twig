@@ -1,0 +1,58 @@
+<div class="split-section-left column large-6 medium-10 small-12 img" style="background-image: url('../uploads/icons/color-symbol-Light.png'); background-repeat:no-repeat; background-position: center; background-size:contain;">
+  {% if entry.splitSectionImg|length %}
+    {% set img = entry.splitSectionImg.one() %}
+    <div class="split-section-image">
+      <div class="split-section-image-inner">
+        <img src="{{ img.url() }}" style="background-position: center; background-repeat:no-repeat;">
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% if entry.fullwidthHeader == 1 %}
+  <div class="columns center-header">
+  {% if entry.splitSectionHeading|length %}
+      <h2>{{ entry.splitSectionHeading }}</h2>
+  {% endif %}
+  </div>
+  <div class="split-section-right column large-6 medium-10 small-12">
+    <div class="split-section-content">
+      {% if entry.splitSectionSubHeading|length %}
+          <h3>{{ entry.splitSectionSubHeading }}</h3>
+      {% endif %}
+      {% if entry.splitSectionText|length %}
+          {{ entry.splitSectionText }}
+      {% endif %}
+      <div style="padding-top: 40px;">
+        {% if entry.splitSectionLink|length %}
+        <a href="{% for entry in entry.splitSectionLink.all() %}{{ entry.url }}{% endfor %}" class="button large" style="margin-right:2vw;">Learn More</a>
+        {% endif %}
+        {% if entry.secondSplitSectionLink|length %}
+        <a href="{% for entry in entry.secondSplitSectionLink.all() %}{{ entry.url }}{% endfor %}" class="button ghost large">Our History</a>
+        {% endif %}
+      </div><!--columns-->
+    </div>
+  </div>
+{% else %}
+  <div class="split-section-right column large-6 medium-10 small-12">
+    <div class="split-section-content">
+      {% if entry.splitSectionHeading|length %}
+          <h2>{{ entry.splitSectionHeading }}</h2>
+      {% endif %}
+      {% if entry.splitSectionSubHeading|length %}
+          <h3>{{ entry.splitSectionSubHeading }}</h3>
+      {% endif %}
+      {% if entry.splitSectionText|length %}
+          {{ entry.splitSectionText }}
+      {% endif %}
+      <div style="padding-top: 40px;">
+        {% if entry.splitSectionLink|length %}
+        <a href="{% for entry in entry.splitSectionLink.all() %}{{ entry.url }}{% endfor %}" class="button large" style="margin-right:2vw;">Learn More</a>
+        {% endif %}
+        {% if entry.secondSplitSectionLink|length %}
+        <a href="{% for entry in entry.secondSplitSectionLink.all() %}{{ entry.url }}{% endfor %}" class="button ghost large">Our History</a>
+        {% endif %}
+      </div><!--columns-->
+    </div>
+  </div>
+{% endif %}
+

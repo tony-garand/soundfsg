@@ -1,0 +1,43 @@
+.author-page {
+  .header-content {
+    padding: 40px 0 40px !important;
+  }
+  .page-section{
+    background-color: $color-light-grey;
+  }
+  .main-section{
+    background-color: $color-light-grey;
+  }
+  ul.tabs{
+  	margin: 0px;
+  	padding: 0px;
+  	list-style: none;
+  }
+  ul.tabs li{
+  	background: none;
+  	color: #222;
+  	display: inline-block;
+  	padding: 10px 15px;
+  	cursor: pointer;
+  }
+
+  ul.tabs li.current{
+  	background: $color-light-grey;
+  	color: #222;
+  }
+
+  .tab-content{
+  	display: none;
+    width: 100%;
+  }
+
+  .tab-content.current{
+  	display: inherit;
+  }
+  .article-section {
+    padding: 40px 0;
+  }
+  section{
+    padding: 40px 0;
+  }
+}

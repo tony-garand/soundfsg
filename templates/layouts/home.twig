@@ -1,0 +1,48 @@
+{% spaceless %}
+{% set type = entry.type|default(category.group.handle|default('null-type')) %}
+{% set slug = entry.slug|default(category.slug|default('null-slug')) %}
+{% if craft.app.request.segments == 'search' %}
+	{% set type = 'search' %}
+{% endif %}
+{% endspaceless %}
+<!DOCTYPE html>
+<html lang="en">
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><html class="no-js" lang="en"><![endif]-->
+<head>
+	{% include 'includes/head' %}
+	{% block head %}{% endblock %}
+</head>
+<body class="animsition {% block bodyClass %}{% endblock %}">
+	<div id="page" canvas="container">
+		{% include 'includes/header' %}
+
+		<div id="overlay" class="js-close-any"></div>
+
+		<div class="top-section">
+			{% block top %}{% endblock %}
+		</div><!--top-section-->
+
+		<div class="main-section">
+			{% block main %}{% endblock %}
+		</div><!--main-section-->
+
+		<div class="bottom-section">
+			{% block bottom %}{% endblock %}
+		</div><!--bottom-section-->
+
+		{% include 'includes/footer' %}
+	</div><!--page-->
+
+	<div off-canvas="slidebar right push">
+		<div class="canvasnav">
+			<nav class="mobilenav" role="navigation">
+				{% include 'functions/mainnav' %}
+			</nav><!--mobilenav-->
+		</div><!--canvasnav-->
+	</div><!--slidebars-->
+
+	{% include 'includes/scripts' %}
+	{% block scripts %}{% endblock %}
+</body>
+</html>

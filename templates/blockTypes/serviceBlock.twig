@@ -1,0 +1,20 @@
+{% for link in entry.serviceLink.all() %}
+  <a href="{{ link.url }}">
+    <div class="service-block-item">
+       <div class="service-block-image" style="position:relative">
+       {% if entry.serviceImage|length %}
+            {% set img = entry.serviceImage.one() %}
+            {% set imgCrop = { mode: 'crop', width: 400, height: 300, quality: 100 } %}
+               <img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}">
+       {% endif %}
+       {% include 'includes/curveBottom'%}
+      </div>
+       <div class="service-block-item-content">
+         {% if entry.serviceHeading|length %}
+              <h3><a href="{{ link.url }}">{{ entry.serviceHeading }}</a></h3>
+         {% endif %}
+         <a class="button primary" style="width:220px;" href="{{ link.url }}">Learn More</a>
+       </div>
+    </div>
+  </a>
+{% endfor %}

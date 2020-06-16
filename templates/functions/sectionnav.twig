@@ -1,0 +1,45 @@
+{% if root is not defined or root is empty %}
+	{% set e = entry|default(craft.entries.slug(craft.app.request.getSegment(1)).one()) %}
+	{% set root = e %}
+	{% if root.type.name != 'Pages' %}
+		{% set root = craft.entries.slug(craft.app.request.getSegment(1)).one() %}
+	{% endif %}
+	{% if root.level > 1 %}
+		{% set root = craft.entries.ancestorOf(entry).one() %}
+	{% endif %}
+{% endif %}
+
+{% if root is not defined or root is null %}
+	{% set root = entry %}
+{% endif %}
+
+{% if root is defined and root is not null or (entry.section.handle == 'pages' and root.getDescendants(1)|length) %}
+	{% if entry.section.handle == 'pages' %}
+		{% set sectionnav = craft.entries.descendantOf(root) %}
+	{% else %}
+		{% set sectionnav = craft.entries.section(entry.section.handle) %}
+	{% endif %}
+	{% if sectionnav.count() %}
+	<div class="sectionnav">
+		<div class="sidebar-header">
+			<h4><a href="{{ root.url }}">{{ root.title }}</a></h4>
+		</div><!--sidebar-content-->
+		<div class="sidebar-content">
+			<nav role="navigation">
+				<ul>
+					{% nav page in sectionnav.all() %}
+						<li class="{{ page.id == entry.id or page.id in entry.ancestors.ids() ? 'active' : '' }}">
+							<a href="{{ page.url }}">{{ page.title }}</a>
+							{% ifchildren %}
+								<ul class="subnav">
+									{% children %}
+								</ul>
+							{% endifchildren %}
+						</li>
+					{% endnav %}
+				</ul>
+			</nav><!--sectionnav-->
+		</div><!--sidebar-content-->
+	</div><!--sidebar-block-->
+	{% endif %}
+{% endif %}

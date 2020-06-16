@@ -1,0 +1,24 @@
+<div class="sidebar-header">
+	<h4>Recent Posts</h4>
+</div><!--sidebar-header-->
+<div class="sidebar-content article-recent">
+	<ul>
+		{% for post in craft.entries.section('articles').orderBy('postDate DESC').limit(4).all() %}
+		<li>
+			{% if post.articleImage|length %}
+			<div class="post-image">
+				{% set img = post.articleImage.one() %}
+				{% set imgCrop = { mode: 'crop', width: 60, height: 60, quality: 100 } %}
+				<a href="{{ post.url }}" title="{{ post.title }}"><img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}"></a>
+			</div><!--post-image-->
+			{% endif %}
+			<span class="post-snippet">
+				<a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+				<span class="post-date">
+					{{ post.postDate|date('M j, Y') }}
+				</span>
+			</span><!--post-snippet-->
+		</li>
+		{% endfor %}
+	</ul>
+</div><!--sidebar-content-->

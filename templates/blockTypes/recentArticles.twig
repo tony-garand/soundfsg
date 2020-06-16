@@ -1,0 +1,58 @@
+{% set article = craft.entries.section('articles').limit(block.numberOfPosts) %}
+{% if block.resourceCategories|length %}
+{% set article = article.relatedTo(block.resourceCategories) %}
+{% endif %}
+{% paginate article as posts %}
+
+{% for entry in posts %}
+<article class="large-4 medium-6 small-12 columns article-post">
+    <div class="post-content">
+        {% if entry.articleImage|length %}
+        <div class="post-image">
+            {% set img = entry.articleImage.first %}
+            {% set imgCrop = { mode: 'crop', width: 800, height: 480, quality: 100 } %}
+            <a href="{{ entry.url }}"><img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" /></a>
+        </div><!--post-image-->
+        {% else %}
+        <div class="post-image">
+			{% set img = entry.articleImage.first %}
+			{% set image = { mode: 'crop', width: 800, height: 480, quality: 100 } %}
+			<a href="{{ entry.url }}"><img src="../uploads/logos/sound-financial-strategies-group-logo.png" /></a>
+		</div>
+        {% endif %}
+        <div class="post-excerpt">
+            <span class="post-meta">
+                <span class="post-date">
+                    {{ entry.postDate|date('M j, Y') }}
+                </span>
+                {% for entry in entry.resourceCategories %}
+                <span class="post-categories">
+                {% if entry.title %}
+                    <a href="{{ entry.url }}">{{ entry.title }}</a>
+                {% endif %}
+                </span>
+                {% endfor %}
+            </span><!--post-meta-->
+            <h3><a href="{{ entry.url }}">{{ entry.title }}</a></h3>
+            <p>{{ entry.articleExcerpt|hacksaw(hack='c', limit='75', allow='<b><strong><i>', append='...') }}</p>
+        </div><!--post-excerpt-->
+        <div class="post-action">
+            <a href="{{ entry.url }}" class="button">Read More</a>
+        </div>
+    </div><!--post-content-->
+</article><!--article-post-->
+{% endfor %}
+{% if block.disablePagination and (paginate.prevUrl or paginate.nextUrl) %}
+<nav class="large-12 medium-12 small-12 columns pagination">
+    <a class="button button-primary {{ not paginate.prevUrl ? 'unavailable' : '' }}" href="{{ paginate.prevUrl }}"><i class="fa fa-angle-left" aria-hidden="true"></i> Prev</a>
+    {% for page, url in paginate.getPrevUrls(5) %}
+    <a class="button pages" href="{{ url }}">{{ page }}</a>
+    {% endfor %}
+    <a class="button pages current" href="#">{{ paginate.currentPage }}</a>
+    {% for page, url in paginate.getNextUrls(5) %}
+    <a class="button pages" href="{{ url }}">{{ page }}</a>
+    {% endfor %}
+    <a class="button button-primary {{ not paginate.nextUrl ? 'unavailable' : '' }}" href="{{ paginate.nextUrl }}">Next <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+</nav>
+{% else %}
+{% endif %}

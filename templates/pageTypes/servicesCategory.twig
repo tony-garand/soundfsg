@@ -1,0 +1,84 @@
+{% extends "layouts/oneColumn" %}
+
+{% block bodyClass %}interior services-category{% endblock %}
+
+{% block top %}
+<section class="page-header" {% if entry.headerBackgroundColor|length %}style="background-color: {{ entry.headerBackgroundColor }};"{% endif %}>
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				<h1>{{ entry.title }}</h1>
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+
+	{% if entry.headerBackgroundImage|length %}
+	<div class="header-image" style="background: url('{{ entry.headerBackgroundImage.one().getUrl() }}') no-repeat {{ entry.headerBackgroundImagePosition }} / {{ entry.headerBackgroundImageSize }}; opacity: {{ entry.headerBackgroundImageOpacity }};"></div><!--header-image-->
+	{% endif %}
+</section><!--page-header-->
+
+<nav class="breadcrumbs" role="navigation">
+	<div class="row align-middle">
+		<div class="large-12 medium-12 small-12 columns">
+			{% include 'functions/breadcrumbs' %}
+		</div><!--columns-->
+	</div><!--row-->
+</nav><!--breadcrumbs-->
+{% endblock %}
+
+{% block main %}
+<section class="page-section services-section">
+	<div class="row section-row align-center">
+
+		<aside class="large-3 large-order-1 medium-10 medium-order-2 small-12 small-order-2 column sidebar">
+			{% include 'functions/sectionnav' %}
+
+			{% for block in entry.pageSidebar.level(1).all() %}
+			<div class="sidebar-block">
+				{% for block in block.children.all() %}
+				<div class="sidebar-content">
+					{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+				</div><!--column-content-->
+				{% endfor %}
+			</div><!--sidebar-content-->
+			{% endfor %}
+		</aside><!--columns-->
+
+		<div class="large-9 large-order-2 medium-10 medium-order-1 small-12 small-order-1 column">
+
+			<div class="row section-row">
+				<div class="large-12 column">
+				{% for block in entry.pageContent.level(1).all() %}
+					<div class="column-content">
+					{% for block in block.children.all() %}
+						{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+					{% endfor %}
+					</div><!--column-content-->
+				{% endfor %}
+				</div><!--columns-->
+			</div><!--row-->
+
+			{% for block in entry.productsContent.level(1).all() %}
+			<div class="row">
+				{% for block in block.children.all() %}
+				<div class="large-3 medium-4 small-6 column">
+					<div class="column-content product-block">
+						{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+					</div><!--column-content-->
+				</div><!--columns-->
+				{% endfor %}
+			</div><!--row-->
+			{% endfor %}
+
+		</div><!--columns-->
+
+	</div><!--row-->
+</section><!--page-section-->
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

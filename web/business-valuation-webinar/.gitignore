@@ -1,0 +1,11 @@
+/.env
+/.idea
+/vendor
+.DS_Store
+storage/
+node_modules
+dist
+uploads
+index.html
+index.html
+webinar-dist/*

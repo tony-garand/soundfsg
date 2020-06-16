@@ -1,0 +1,196 @@
+{% extends "layouts/oneColumn" %}
+
+{% block bodyClass %}interior resource category-page{% endblock %}
+
+{% set parent = craft.entries.section('pages').slug(craft.app.request.segments|first).one() %}
+
+{% block top %}
+<section class="page-header">
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				<nav class="breadcrumbs" role="navigation">
+					<div class="row align-middle">
+						<div class="large-12 medium-12 small-12 columns">
+							{% include 'functions/breadcrumbs' %}
+						</div><!--columns-->
+					</div><!--row-->
+				</nav><!--breadcrumbs-->
+				<h2>Categories:</h2>
+				<h1>{{ category.title }}</h1>
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+	<div class="row section-row">
+		<div class="large-12 medium-12 small-12 columns">
+			<ul class="tabs">
+				<li value="Toggle All Tabs" class="toggle_tabs tab-link all current" data-tab="tab-1">All</li>
+				{% if craft.entries().section('articles').relatedTo(category).all()|length %}
+				<li class="tab-link" data-tab="tab-2">Articles</li>
+				{% endif %}
+				{% if craft.entries().section('books').relatedTo(category).all()|length %}
+				<li class="tab-link" data-tab="tab-3">Books</li>
+				{% endif %}
+				{% if craft.entries().section('podcasts').relatedTo(category).all()|length %}
+				<li class="tab-link" data-tab="tab-4">Podcasts</li>
+				{% endif %}
+				{% if craft.entries().section('videos').relatedTo(category).all()|length %}
+				<li class="tab-link" data-tab="tab-5">Videos</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</section><!--page-header-->
+{% endblock %}
+
+{% block main %}
+<div class="row section-row">
+		<div id="tab-1" class="tab-content">
+		</div>
+		{% if craft.entries().section('articles').relatedTo(category).all()|length %}
+		<div id="tab-2" class="tab-content current">
+			<section class="page-section article-section" style="width: 100vw; padding-left: 0.9375rem; padding-right: 0.9375rem;">
+				<h2>Articles</h2>
+					{% set posts = craft.entries.section('articles').orderBy('postDate DESC').relatedTo(category) %}
+					{% for post in posts.all() %}
+					<article class="large-3 medium-6 small-12 columns" style="float:left;">
+						<div class="article-post">
+							{% if post.articleImage|length %}
+							<div class="post-image">
+								{% set img = post.articleImage.one() %}
+								{% set imgCrop = { mode: 'crop', width: 600, height: 400, quality: 100 } %}
+								<a href="{{ post.url }}" title="{{ post.title }}">
+									<img src="{{ img.url }}" width="{{ imgCrop.width }}" height="{{ imgCrop.height }}" alt="{{ img.altText|default(img.title) }}">
+								</a>
+								{% include 'includes/curveBottom' %}
+							</div><!--post-image-->
+							{% endif %}
+							<div class="post-content">
+								<span class="post-meta">
+									<span class="date">{{ post.postDate|date('M j, Y') }}</span>
+								</span><!--post-meta-->
+								<h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+								{% if post.articleExcerpt|length %}
+								<p>{{ post.articleExcerpt|chop(limit=10, unit='w') }}...</p>
+								{% endif %}
+								<a href="{{ post.url }}" title="{{ post.title }}" class="read-more">Read More</a>
+							</div><!--post-content-->
+							{% for cat in post.resourceCategories.all() %}
+							<span class="categories">
+								<a class="category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+							</span>
+							{% endfor %}
+						</div><!--article-post-->
+					</article><!--columns-->
+					{% else %}
+					<div class="large-12 medium-12 small-12 columns">
+						<p>No posts could be found.</p>
+					</div>
+					{% endfor %}
+			</section><!--section-content-->
+		</div>
+		{% endif %}
+		{% if craft.entries().section('books').relatedTo(category).all()|length %}
+		<div id="tab-3" class="tab-content current">
+			<section class="page-section book-section" style="width: 100vw; padding-left: 0.9375rem; padding-right: 0.9375rem;">
+				<h2>Books</h2>
+					{% set posts = craft.entries.section('books').orderBy('postDate DESC').relatedTo(category) %}
+					{% for post in posts.all() %}
+					<article class="large-3 medium-6 small-12" style="float:left;">
+						<div class="book-post">
+							<div class="post-image">
+								<a href="{{post.url}}" title="{{ post.title }}">
+									<div class="book-image" alt="book-link"></div>
+								</a>
+							</div><!--post-image-->
+							<div class="book-content">
+								{% for cat in post.resourceCategories.all() %}
+								<span>
+									<a class="book-category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+								</span>
+								{% endfor %}
+								<h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+							</div><!--post-content-->
+						</div><!--book-post-->
+					</article><!--columns-->
+					{% else %}
+					<div class="large-12 medium-12 small-12">
+						<p>No posts could be found.</p>
+					</div>
+					{% endfor %}
+			</section><!--section-content-->
+		</div>
+		{% endif %}
+		{% if craft.entries().section('podcasts').relatedTo(category).all()|length %}
+		<div id="tab-4" class="tab-content current">
+			<section class="page-section podcast-section" style="width: 100vw; padding-left: 0.9375rem; padding-right: 0.9375rem;">
+				<h2>Podcasts</h2>
+				{% set posts = craft.entries.section('podcasts').orderBy('postDate DESC').relatedTo(category) %}
+				{% for post in posts.all() %}
+				<article class="large-3 medium-6 small-12" style="float:left;">
+					<div class="podcast-post">
+						<div class="post-image">
+							<a href="{{post.url}}" title="{{ post.title }}">
+								<div class="podcast-image" alt="podcast-link"></div>
+							</a>
+						</div><!--post-image-->
+						<div class="podcast-content">
+							<span class="post-meta">
+								<span class="date">{{ post.postDate|date('M j, Y') }}</span>
+							</span><!--post-meta-->
+							{% for cat in post.resourceCategories.all() %}
+							<span>
+								<a class="podcast-category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+							</span>
+							{% endfor %}
+							<h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+						</div><!--post-content-->
+					</div><!--podcast-post-->
+				</article><!--columns-->
+				{% endfor %}
+			<section>
+		</div>
+		{% endif %}
+		{% if craft.entries().section('videos').relatedTo(category).all()|length %}
+		<div id="tab-5" class="tab-content current">
+			<section class="page-section video-section" style="width: 100vw; padding-left: 0.9375rem; padding-right: 0.9375rem;">
+				<h2>Videos</h2>
+						{% set posts = craft.entries.section('videos').orderBy('postDate DESC').relatedTo(category) %}
+						{% for post in posts.all() %}
+						<article class="large-6 medium-12 small-12 columns featured-video" style="float:left;">
+							<div class="featured-video-post">
+								{% if post.videoThumbnail|length %}
+								{% set img = post.videoThumbnail.one() %}
+									<a href="{{post.url}}" title="{{ post.title }}">
+										<div class="post-image large-6 medium-6 small-12" style="background-image: url('{{img.url}}');" alt="{{ img.altText|default(img.title) }}">
+									</a>
+									{% include 'includes/curveSide' %}
+								</div><!--post-image-->
+								{% endif %}
+									<div class="post-content large-6 medium-6 small-12">
+									<h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+									<span class="post-meta">
+										<span class="date">{{ post.postDate|date('M j, Y') }}</span>
+									</span><!--post-meta-->
+									{% if post.videoExcerpt|length %}
+									<p>{{ post.videoExcerpt|chop(limit=200, unit='w') }}...</p>
+									{% endif %}
+									<a href="{{ post.url }}" title="{{ post.title }}" class="read-more">Watch Now</a>
+								</div><!--post-content-->
+								{% for cat in post.resourceCategories.all() %}
+								<span class="categories">
+									<a class="category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+								</span>
+								{% endfor %}
+							</div><!--video-post-->
+						</article><!--columns-->
+						{% endfor %}
+				</section>
+			</div>
+			{% endif %}
+</div><!--row-->
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}

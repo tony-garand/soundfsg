@@ -1,0 +1,12 @@
+<div class="sidebar-header">
+	<h4>Archives</h4>
+</div><!--sidebar-header-->
+<div class="sidebar-content article-archives">
+	<select name="archives" onchange="document.location.href=this.options[this.selectedIndex].value;">
+		<option selected="selected" disabled="disabled">Select by Month</option>
+		{% set allEntries = craft.entries.section('articles').orderBy('postDate DESC').limit(null) %}
+		{% for month, entries in allEntries.all()|group("postDate.format('Y-m')") %}
+			<option value="{{ siteUrl }}article/archives/{{ month|date('Y-m') }}">{{ month|date('F Y') }}</option>
+		{% endfor %}
+	</select>
+</div><!--sidebar-content-->

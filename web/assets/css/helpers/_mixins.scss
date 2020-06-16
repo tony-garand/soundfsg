@@ -1,0 +1,19 @@
+/* Mixins */
+
+/* Animation Transitions */
+
+@mixin transition($transitions-primary) {
+	-webkit-transition: $transitions-primary;
+    -moz-transition: $transitions-primary;
+    -o-transition: $transitions-primary;
+    -ms-transition: $transitions-primary;
+    transition: $transitions-primary;
+	}
+
+@mixin transition($transitions-secondary) {
+	-webkit-transition: $transitions-secondary;
+	-moz-transition: $transitions-secondary;
+	-o-transition: $transitions-secondary;
+	-ms-transition: $transitions-secondary;
+	transition: $transitions-secondary;
+	}

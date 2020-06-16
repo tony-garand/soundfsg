@@ -1,0 +1,91 @@
+/* Admin Overrides
+----------------------------------------------------------------------
+
+/* Login Page */
+
+body.login {
+	background-color: #fff;
+}
+
+#login-form.has-logo {
+	padding-top: 120px!important;
+}
+
+#login-form h1 {
+	height: 40px;
+	margin-bottom: 30px;
+	color: #0d0d0d!important;
+	font-size: 36px;
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+	text-indent: -9999px;
+	overflow: hidden;
+	background-size: contain;
+	background-image: url('../images/admin-logo.svg');
+	background-repeat: no-repeat;
+	background-position: center center ;
+}
+
+#poweredby {
+    display: none !important;
+}
+
+#login-form:after {
+	width: 130px;
+	height: 37px;
+	padding-top: 40px;
+	margin: 0 auto;
+	content: "";
+	display: block;
+}
+
+#login-form:after {
+	background: url('../images/idd-admin-logo.svg') center center no-repeat;
+	background-size: 100px;
+}
+
+/* Neo Matrix Overrides */
+
+html body .neo-matrixblock,
+html body .ni_block .matrixblock {
+    border-color: #e3e5e8;
+    background-color: #fff;
+    box-shadow: 0 1px 5px -1px rgba(0,0,0,0);
+}
+
+html body .neo-matrixblock>.titlebar,
+html body .ni_block .matrixblock>.titlebar {
+    border-bottom-color: #e3e5e8;
+    background-color: #eef0f1;
+}
+
+html body .matrixblock > .titlebar > .blocktype {
+    color: #576575;
+}
+
+html body .ni_block_topbar_left .checkbox.block-checkbox {
+	padding-top: 9px;
+}
+
+html body .ni_block_topbar .ni_block_topbar_left {
+	color: #576575!important;
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+html body .ni_block_body .ni_block_topbar .ni_block_topbar_left {
+	font-size: 13px;
+	font-weight: normal;
+	text-transform: none;
+}
+
+html body .ni_block_children,
+html body .ni_block_topbar {
+    background-color: #EdEdEd;
+}
+
+html body .ni_block_topbar_item.tabs .tab {
+    color: rgba(41,50,61,.8);
+}

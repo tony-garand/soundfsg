@@ -1,0 +1,64 @@
+{% extends "layouts/oneColumn" %}
+
+{% block bodyClass %}interior search-results{% endblock %}
+
+{% set query = craft.app.request.getQueryParam('search') %}
+{% set section = craft.app.request.getQueryParam('section') %}
+
+{% block top %}
+<section class="page-header" {% if entry.headerBackgroundColor|length %}style="background-color: {{ entry.headerBackgroundColor }};"{% endif %}>
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				<nav class="breadcrumbs" role="navigation">
+					<div class="row align-middle">
+						<div class="large-12 medium-12 small-12 columns">
+							{% include 'functions/breadcrumbs' %}
+						</div><!--columns-->
+					</div><!--row-->
+				</nav><!--breadcrumbs-->
+				<h1>{{ entry.title }} Results</h1>
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--page-header-->
+{% endblock %}
+
+{% block main %}
+<section class="page-section search-section">
+	<div class="row section-row align-center">
+		<div class="large-12 medium-10 small-12 columns">
+			{% if query|length %}
+			{% set entries = craft.entries.search(query).orderBy('score').hiddenPage('not 1') %}
+			{% if section != 'all' %}
+			{% set entries = entries.section(section) %}
+			{% else %}
+			{% set entries = entries.section('and, not footerNavigation, not slides') %}
+			{% endif %}
+			<div class="content-block">
+				{% if entries|length %}
+				<h3>{% if query|length %} The search term <strong><em>"{{ query }}"</em></strong> found {% endif %}{{ entries|length }} results:</h3>
+				<ul>
+					{% for entry in entries.all() %}
+					<li>
+						<a href="{{ entry.url }}">{{ entry.title }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+				{% else %}
+				<h3>Sorry, your search for <strong><em>"{{ query }}"</em></strong>  didn’t return any results. </h3>
+				<p>You can return to our <a href="/">homepage</a> or you can try <a data-fancybox data-src="#search-modal" href="javascript:;">searching</a> again.</p>
+				{% endif %}
+			</div>
+			{% else %}
+			<h3>Sorry, your search didn't return any results.</h3>
+			<p>You can return to our <a href="/">homepage</a> or you can try <a data-fancybox data-src="#search-modal" href="javascript:;">searching</a> again.</p>
+			{% endif %}
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--page-section-->
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}

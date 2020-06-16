@@ -1,0 +1,8 @@
+{% extends 'layouts/base.twig' %}
+{% block body %}
+    {% include 'blockTypes/oneColumnContentHeader.twig' with entry %}
+    {% include 'blockTypes/fullWidthImage' with {'image': entry.featuredImage.one()} %}
+    {% include 'components/articleContent' %}
+    {% include 'components/newsletterSignup' %}
+    {% include 'blockTypes/relatedResourcesWide' with {'category': entry.category} %}
+{% endblock body %}

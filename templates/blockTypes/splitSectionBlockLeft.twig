@@ -1,0 +1,34 @@
+<div class="splitSectionBlockLeft" id="{{loopIndex}}">
+  <div class="split-section-right column large-6 medium-8 small-12">
+    <div class="split-section-content">
+      {% if entry.splitSectionHeading|length %}
+           <h2 class="split-left-h2">{{ entry.splitSectionHeading }}</h2>
+      {% endif %}
+      {% if entry.splitSectionText|length %}
+           {{ entry.splitSectionText }}
+      {% endif %}
+      <div style="padding-top: 40px;">
+        {% if entry.splitSectionLink|length %}
+        <a href="{% for entry in entry.splitSectionLink.all() %}{{ entry.url }}{% endfor %}" class="button large">Learn More</a>
+        {% endif %}
+        {% if entry.secondSplitSectionLink|length %}
+        <a href="{% for entry in entry.secondSplitSectionLink.all() %}{{ entry.url }}{% endfor %}" class="button ghost large">Learn More</a>
+        {% endif %}
+      </div><!--columns-->
+    </div>
+  </div>
+  <div class="split-section-left column large-6 medium-4 small-12 img" style="background-image: url('../uploads/icons/color-symbol-Light.png'); background-repeat:no-repeat; background-position: center; background-size:contain;">
+    {% if entry.splitSectionImg|length %}
+      {% set img = entry.splitSectionImg.one() %}
+      {% set imgCrop = { mode: 'crop', width: 600, height: 500, quality: 100 } %}
+      <div class="split-section-image">
+          <img src="{{ img.url() }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}">
+      </div>
+    {% endif %}
+    <div class="service-links">
+    {% if entry.serviceLinks|length %}
+      {{ entry.serviceLinks }}
+    {% endif %}
+    </div>
+  </div>
+</div>

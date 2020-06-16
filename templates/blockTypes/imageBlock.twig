@@ -1,0 +1,10 @@
+<figure class="image-block align-{{ entry.imageAlignment }}">
+{% set img = entry.imageBlock.one() %}
+{% if entry.imageUrl|length %}
+    <a href="{{ entry.imageUrl }}" target="{{ entry.openLinkInNewWindow ? '_blank' : '_self' }}" {% if siteUrl not in imageUrl.url %} rel="nofollow"{% endif %}>
+        <img src="{{ img.url }}" alt="{{ img.title }}">
+    </a>
+{% else %}
+    <img src="{{ img.url }}" alt="{{ img.title }}">
+{% endif %}
+</figure>

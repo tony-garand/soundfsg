@@ -1,0 +1,105 @@
+{% extends "layouts/oneColumn" %}
+
+{% block bodyClass %}interior article archive-page{% endblock %}
+
+{% set parent = craft.entries.section('pages').slug(craft.app.request.segments|first).one() %}
+
+{% block top %}
+<section class="page-header" style="{% if parent.headerBackgroundColor|length %}background-color: {{ parent.headerBackgroundColor }};{% endif %}">
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				<h2>Archives</h2>
+				{% if year is defined and month is defined %}
+				{% set archiveDate = year ~ '-' ~ month ~ '-01' %}
+				<h1>{{ archiveDate|date('F Y') }}</h1>
+				{% endif %}
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+	{% if parent.headerBackgroundImage|length %}
+	<div class="header-image" style="background-image: url('{{ parent.headerBackgroundImage.one().getURL() }}'); background-position: {{  parent.headerBackgroundImagePosition }}; background-size: {{ parent.headerBackgroundImageSize }}; opacity: {{ parent.headerBackgroundImageOpacity }};" ></div><!--header-image-->
+	{% endif %}
+</section><!--page-header-->
+
+<nav class="breadcrumbs" role="navigation">
+	<div class="row align-middle">
+		<div class="large-12 medium-12 small-12 columns">
+			{% include 'functions/breadcrumbs' %}
+		</div><!--columns-->
+	</div><!--row-->
+</nav><!--breadcrumbs-->
+{% endblock %}
+
+{% block main %}
+{% if year is not defined %}
+{% set year = now.year %}
+{% endif %}
+{% if month is not defined %}
+{% set month = now.month %}
+{% endif %}
+{% if month != 12 %}
+{% set nextmonth = month+1 %}
+{% set nextyear = year %}
+{% else %}
+{% set nextmonth = 01 %}
+{% set nextyear = year+1 %}
+{% endif %}
+<section class="page-section article-section">
+	<div class="row section-row">
+		{% paginate craft.entries.section('article').after(year ~ '-' ~ month).before(nextyear ~ '-' ~ nextmonth).orderBy('postDate DESC').limit(6) as info, posts %}
+		{% for post in posts %}
+		<article class="large-4 medium-6 small-12 columns">
+			<div class="article-post">
+				{% if post.articleImage|length %}
+				<div class="post-image">
+					{% set img = post.articleImage.one() %}
+					{% set imgCrop = { mode: 'crop', width: 800, height: 500, quality: 100 } %}
+					<a href="{{ post.url }}" title="{{ post.title }}">
+						<img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}">
+					</a>
+				</div><!--post-image-->
+				{% endif %}
+				<div class="post-content">
+					<span class="post-meta">
+						<span class="date">{{ post.postDate|date('M j, Y') }}</span>
+						{% for cat in post.articleCategories.all() %}
+						<span class="categories">
+							<a href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+						</span>
+						{% endfor %}
+					</span><!--post-meta-->
+					<h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+					{% if post.articleExcerpt|length %}
+					<p>{{ post.articleExcerpt|chop(limit=20, unit='w') }}...</p>
+					{% endif %}
+					<a href="{{ post.url }}" title="{{ post.title }}" class="button small">Read More</a>
+				</div><!--post-content-->
+			</div><!--article-post-->
+		</article><!--columns-->
+		{% else %}
+		<div class="large-12 medium-12 small-12 columns">
+			<p>No posts could be found.</p>
+		</div>
+		{% endfor %}
+
+		{% if info.prevUrl or info.nextUrl %}
+		<nav class="large-12 medium-12 small-12 columns pagination">
+			<a class="button prev {{ not info.prevUrl ? 'unavailable' : '' }}" href="{{ info.prevUrl }}"></i> Prev</a>
+			{% for page, url in info.getPrevUrls(5) %}
+			<a class="button page" href="{{ url }}">{{ page }}</a>
+			{% endfor %}
+			<a class="button page current" href="#">{{ info.currentPage }}</a>
+			{% for page, url in info.getNextUrls(5) %}
+			<a class="button page" href="{{ url }}">{{ page }}</a>
+			{% endfor %}
+			<a class="button next {{ not info.nextUrl ? 'unavailable' : '' }}" href="{{ info.nextUrl }}">Next</a>
+		</nav>
+		{% endif %}
+	</div><!--row-->
+</section><!--page-section-->
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}

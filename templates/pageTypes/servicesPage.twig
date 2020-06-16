@@ -1,0 +1,66 @@
+{% extends "layouts/oneColumn" %}
+{% block bodyClass %} services-page{% endblock %}
+{% block top %}
+<section class="page-header">
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				<nav class="breadcrumbs" role="navigation">
+					<div class="row align-middle">
+						<div class="large-12 medium-12 small-12 columns">
+							{% include 'functions/breadcrumbs' %}
+						</div><!--columns-->
+					</div><!--row-->
+				</nav><!--breadcrumbs-->
+				<h1>{{ entry.title }}</h1>
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--page-header-->
+{% endblock %}
+{% block main %}
+{% for block in entry.servicesSections.level(1).all() %}
+{% switch block.type %}
+{% case 'introSection' %}
+<section class="page-section service-intro-section">
+	<div class="row section-row align-center">
+		<div class="large-12 medium-10 small-12 column">
+			{% if block.serviceIntroText|length %}
+			<div class="service-intro">{{ block.serviceIntroText }}</div>
+			{% endif %}
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--testimonies-section-->
+{% case 'servicesSection' %}
+<section class="page-section service-page-section">
+	<div class="row align-center section-row">
+		<div class="main-carousel" id="services-carousel"
+		data-flickity='{ "wrapAround": true, "cellAlign": "left", "contain": true, "draggable": true, "pageDots": true, "autoPlay": 5000, "prevNextButtons": true, "watchCSS": true }'>
+		{% for block in block.children.all() %}
+				<div class="large-4 medium-4 small-12 column carousel-cell">
+					<div class="content-block">
+						{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+					</div><!--content-block-->
+				</div><!--columns-->
+		{% endfor %}
+	</div><!--row-->
+</section><!--service-section-->
+{% case 'splitSection' %}
+<section class="page-section split-section">
+	<div class="row align-center section-row">
+		{% for block in block.children.all() %}
+		{% set loopIndex = loop.index %}
+		<div class="large-12 medium-12 small-12 column">
+				{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+		</div><!--columns-->
+		{% endfor %}
+	</div><!--row-->
+</section><!--callout-section-->
+{% endswitch %}
+{% endfor %}
+{% endblock %}
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}
+{% block scripts %}
+{% endblock %}

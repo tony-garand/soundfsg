@@ -1,0 +1,33 @@
+.contact-page {
+  iframe {
+    width: 84vw;
+    max-width: 1220px;
+    @media screen and (max-width: $responsive-small) { width: 90vw;}
+  }
+  .main-section .page-section {
+    padding-top: 0px;
+  }
+  #contactform-form {
+    .input textarea,
+    .input input {
+      background-color: $color-light-grey;
+    }
+  }
+  .location-info {
+    h2 {
+      font-size: 2rem;
+      margin-left: -3rem;
+      &:before {
+        font-family: 'Material Icons';
+        content: '\e569';
+        font-size: 2rem;
+        padding-right:1rem;
+      }
+    }
+    .column-content{
+      padding: 2% 30%;
+      position: relative;
+      @media screen and (max-width: $responsive-small) { padding: 0;}
+    }
+  }
+}

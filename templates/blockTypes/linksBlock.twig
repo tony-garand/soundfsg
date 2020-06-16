@@ -1,0 +1,9 @@
+{% if entry.linksBlock|length %}
+	<ul class="links-block">
+	{% for link in entry.linksBlock.all() %}
+		<li>
+			<a href="{{ link.linkUrl }}" {% if link.openLinkInNewWindow|length %}target="_blank" {% if siteUrl not in link.url %} rel="nofollow"{% endif %}{% endif %}>{{ link.linkText }}</a>
+		</li>
+	{% endfor %}
+	</ul><!--links-block-->
+{% endif %}

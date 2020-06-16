@@ -1,0 +1,47 @@
+<section class="book-section large-10 medium-12 small-12" style="margin:auto;">
+  <div class="large-8 medium-6 small-12 resource-book-section">
+      {% if block.resourceCategories is empty %}
+      {% paginate craft.entries.section('books').orderBy('postDate DESC').limit(2) as info, posts %}
+      {% else %}
+      {% paginate craft.entries.section('books').relatedTo(block.resourceCategories).orderBy('postDate DESC').limit(2) as info, posts %}
+      {% endif %}
+      {% for post in posts %}
+      <div class="column large-5 medium-5 small-12" style="float:left">
+        <article class="book-post-resource-page">
+                  {% if post.bookImage|length %}
+                  <div class="post-image">
+                       {% set img = post.bookImage.one() %}
+                       {% set imgCrop = { mode: 'crop', width: 600, height: 400, quality: 100 } %}
+                       <a href="{{ post.url }}" title="{{ post.title }}">
+                            <img src="{{ img.url }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}">
+                       </a>
+                  </div><!--post-image-->
+                  {% endif %}
+                  <div class="post-content">
+                       <span class="post-meta">
+                            {% for cat in post.resourceCategories.all() %}
+                            <span class="categories">
+                                 <a class="category" href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+                            </span>
+                            {% endfor %}
+                       </span><!--post-meta-->
+                       <h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+                  </div><!--post-content-->
+        </article><!--article-post-->
+      </div><!--columns-->
+      {% endfor %}
+  </div>
+  <div class="large-4 medium-6 small-12" style="float:right;">
+    <div class="section-content">
+      {% if block.sectionHeaderHeading|length %}
+      <h2>{{ block.sectionHeaderHeading }}</h2>
+      {% endif %}
+      {% if block.sectionHeaderText|length %}
+      {{ block.sectionHeaderText }}
+      {% endif %}
+      {% if block.sectionFooterButtonText|length %}
+      <a href="{{ siteUrl }}resources/{{ block.sectionFooterButtonUrl }}" class="button resource-book-button">{{ block.sectionFooterButtonText }}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>

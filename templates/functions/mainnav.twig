@@ -1,0 +1,19 @@
+{% set nav = craft.navigation.nodes('mainNav').all() %}
+<ul>
+    {% nav node in nav %}
+        {% set nodeClasses = [] %}
+        {% if node.hasDescendants %}
+        	{% set nodeClasses = nodeClasses|merge(['has-children']) %}
+        {% endif %}
+		<li class="{% if nodeClasses|length %}{{ nodeClasses|join(' ') }}{% endif %}{% if node.active %} active{% endif %}{{ node.classes|join(' ') }}" >
+            <a href="{{ node.url }}" {% if node.newWindow %}target="_blank" {% endif %} {% if siteUrl not in node.url %}rel="nofollow" {% endif %}>
+            {{ node.title }}
+            </a>
+            {% ifchildren %}
+                <ul>
+                    {% children %}
+                </ul>
+            {% endifchildren %}
+        </li>
+    {% endnav %}
+</ul>

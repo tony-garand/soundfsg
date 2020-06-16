@@ -1,0 +1,64 @@
+{% extends "layouts/oneColumn" %}
+{% block bodyClass %}interior article post-page{% endblock %}
+{% set parent = craft.entries.section('pages').slug(craft.app.request.segments).one() %}
+{% block top %}
+<section class="page-header">
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<nav class="breadcrumbs" role="navigation">
+				<div class="row align-middle">
+					<div class="large-12 medium-12 small-12 columns">
+						{% include 'functions/breadcrumbs' %}
+					</div><!--columns-->
+				</div><!--row-->
+			</nav><!--breadcrumbs-->
+			<div class="header-content">
+				<h1>{{ entry.title }}</h1>
+				<span class="date">
+					{{ entry.postDate|date('F j, Y') }}
+				</span>
+			</div><!--header-content-->
+			{% if entry.articleImage|length %}
+			{% set img = entry.articleImage.one() %}
+			<div class="article-image large-12 medium-12 small-12" style="background-image: url('{{img.url}}');" alt="{{ img.altText|default(img.title) }}">
+			</div><!--post-image-->
+			{% endif %}
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--page-header-->
+{% endblock %}
+{% block main %}
+<section class="page-section article-post-page">
+	<div class="row align-center">
+		<div class="share-post-side" id="share-post-side" style="float:left;">
+			<h5>Share</h5>
+			{% include 'components/socialMedia' %}
+		</div>
+		<article class="large-9 medium-10 small-12 column">
+			<div class="post-content">
+				{{ entry.articleContent }}
+				<footer class="post-footer">
+					<div class="share-post" style="float:left;">
+						{% include 'components/socialMedia' %}
+					</div>
+					<div class="post-categories" style="float:right;">
+						{% include 'components/postCategories' %}
+					</div>
+				</footer><!--post-footer-->
+		</article><!--article-post-->
+	</div><!--row-->
+	<div class="row align-center">
+		<div class="large-9 medium-10 small-12 column" style="margin:auto;">
+		{% include 'components/postAuthor' %}
+		</div>
+	</div><!--row-->
+</section><!--page-content-->
+{% include 'includes/newsletter' %}
+{% if entry.resourceCategories|length %}
+{% include 'components/relatedResources' %}
+{% endif %}
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}

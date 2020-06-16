@@ -1,0 +1,30 @@
+{% extends "layouts/oneColumn" %}
+
+{% block bodyClass %}interior{% endblock %}
+
+{% block top %}
+{% include 'components/resourceHeader' %}
+{% endblock %}
+
+{% block main %}
+<section class="page-section">
+	<div class="row section-row align-center">
+		<div class="large-11 medium-10 small-12 column">
+			{% for block in entry.pageContent.level(1).all() %}
+			<div class="column-content">
+				{% for block in block.children.all() %}
+				{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+				{% endfor %}
+			</div><!--column-content-->
+			{% endfor %}
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--page-section-->
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

@@ -1,0 +1,23 @@
+<div class="clientBlock" id="{{loopIndex}}">
+  <div class="client-left large-6 medium-6 small-12 split-section-left" style="background-image: url('../uploads/icons/color-symbol-Light.png'); background-repeat:no-repeat; background-position: center; background-size:contain; margin-left:-100px;">
+    {% if entry.clientImage|length %}
+      {% set img = entry.clientImage.one() %}
+      <div class="split-section-image client-image">
+        <div class="split-section-image-inner client-image-inner">
+          <img src="{{ img.url() }}">
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="client-right large-6 medium-6 small-12">
+    <div class="client-content">
+      {% if entry.clientName|length %}
+           <h2>{{ entry.clientName }}</h2>
+      {% endif %}
+      {% if entry.clientStory|length %}
+      <p>{{ entry.clientStory }}</p>
+      {% endif %}
+    </div>
+  </div>
+</div>

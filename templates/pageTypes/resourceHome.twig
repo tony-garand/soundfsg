@@ -1,0 +1,71 @@
+{% extends "layouts/oneColumn" %}
+
+{% block bodyClass %}interior Resource resource-page{% endblock %}
+
+{% block top %}
+<section class="page-header resouce">
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				<nav class="breadcrumbs" role="navigation">
+					<div class="row align-middle">
+						<div class="large-12 medium-12 small-12 columns">
+							{% include 'functions/breadcrumbs' %}
+						</div><!--columns-->
+					</div><!--row-->
+				</nav><!--breadcrumbs-->
+				<h1>{{ entry.title }}</h1>
+				<div class="resourceForm">
+					{% if entry.headerSubHeading|length %}
+					<h4>{{ entry.headerSubHeading|replace({'<p>':'', '</p>':''})|raw }}</h4>
+					{% endif %}
+					{{ craft.sproutForms.displayForm('resourceSignUp') }}
+				</div>
+			</div><!--header-content-->
+
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--page-header-->
+{% endblock %}
+
+{% block main %}
+{% for block in entry.resourceSections.level(1).all() %}
+{% switch block.type %}
+
+{% case 'resourcePageArticleBlock' %}
+<section class="page-section article-resource-section">
+		<div class="row">
+		{% include 'blockTypes/resourcePageArticleBlock' %}
+		</div>
+</section><!--article section-->
+
+{% case 'resourcePageBookBlock' %}
+<section class="page-section book-resource-section">
+		<div class="row">
+		{% include 'blockTypes/resourcePageBookBlock' %}
+		</div>
+</section><!--Podcast section-->
+
+{% case 'resourcePageVideoBlock' %}
+<section class="page-section video-resource-section">
+		<div class="row">
+		{% include 'blockTypes/resourcePageVideoBlock' %}
+		</div>
+</section><!--video section-->
+
+{% case 'resourcePagePodcastBlock' %}
+<section class="page-section podcast-resource-section">
+		<div class="row">
+		{% include 'blockTypes/resourcePagePodcastBlock' %}
+		</div>
+</section><!--Podcast section-->
+
+{% endswitch %}
+{% endfor %}
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}
+
+{% block scripts %}{% endblock %}

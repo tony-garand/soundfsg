@@ -1,0 +1,279 @@
+/* purgecss start ignore */
+@tailwind base;
+
+@import '../node_modules/flickity/css/flickity.css';
+
+
+@import "https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700|Source+Serif+Pro:400,600,700&display=swap";
+
+html {
+    font-size: 20px;
+}
+
+body {
+    @apply text-black font-body;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    @apply font-display text-primary font-bold;
+}
+
+a {
+    @apply text-primary-lighter underline transition;
+}
+a:hover {
+    @apply text-primary;
+}
+
+p {
+    @apply font-body leading-relaxed mb-5;
+}
+
+.featured-list-item .body p:last-of-type {
+    @apply mb-0;
+}
+
+.related-resources .resources > div {
+    @apply border-b border-gray-500;
+}
+@media (min-width: 1024px) {
+    .related-resources .resources.resources-wide > div {
+        @apply border-none;
+    }
+}
+.related-resources .resources > div:last-child {
+    @apply border-0;
+}
+
+.footer-disclaimer p {
+    @apply leading-loose;
+}
+
+/* enable Flickity by default */
+.main-carousel:after {
+  content: 'flickity';
+  display: none;
+}
+@media screen and ( min-width: 768px ) {
+  .main-carousel:after {
+    content: '';
+  }
+}
+.flickity-viewport {
+    overflow: visible;
+    width: 100% !important;
+}
+.flickity-page-dots {
+    bottom: 0px;
+}
+.flickity-page-dots .dot {
+    @apply w-3 h-3 bg-white shadow-dot border border-gray-400;
+}
+.flickity-page-dots .dot.is-selected {
+    @apply bg-secondary border-secondary;
+}
+
+.required label:after {
+    content: '*';
+    @apply text-red-500 ml-1;
+}
+
+/* purgecss end ignore */
+@tailwind components;
+
+/* purgecss start ignore */
+.transition {
+    transition: all .2s;
+}
+
+.style-h1 {
+    @apply text-4xl leading-none;
+}
+@media (min-width: 1024px) {
+    .style-h1 {
+        @apply text-6xl leading-tight;
+    }
+}
+
+@responsive {
+    .btn {
+        @apply bg-extra-lighter rounded text-white text-xs px-6 py-3 no-underline font-bold border-extra-lighter border inline-block text-center;
+    }
+    .btn:hover {
+        @apply text-white bg-extra border-extra;
+    }
+    .btn-sm {
+        @apply px-3 py-1 text-sm;
+    }
+    .btn-transparent {
+        @apply bg-transparent text-primary border-primary;
+    }
+}
+
+.hover-scale:hover {
+    transform: scale(1.2);
+}
+
+.logo-dimensions {
+    width: 124px;
+    height: 34px;
+}
+@media (min-width: 1024px) {
+    .logo-dimensions {
+        width: 244px;
+        height: 67px;
+    }
+}
+
+.limited-height-title {
+    max-height: 52px;
+    @apply overflow-hidden;
+}
+@media (min-width: 1024px) {
+    .limited-height-title {
+        max-height: none;
+    }
+}
+
+.play-overlay {
+    @apply relative;
+}
+.play-overlay:hover {
+    @apply opacity-75;
+}
+.play-overlay:after {
+    @apply absolute w-full h-full;
+    content: ' ';
+    background: url('/assets/images/play.svg');
+    background-size: 92px 110px;
+    background-position: center;
+    background-repeat: no-repeat;
+    top: 0;
+    left: 0;
+}
+
+.scroller-item {
+    transition: width 1s, margin-right 1s;
+    @apply overflow-hidden;
+}
+@media screen and (min-width: 1024px) {
+    .scroller-item {
+        @apply shadow-md;
+    }
+}
+.scroller-item.hide {
+    width: 0;
+    margin-right: 0;
+}
+
+.button {
+    @apply font-bold transition bg-secondary no-underline text-white rounded leading-none px-10 py-4 text-sm inline-block;
+}
+.button:hover {
+    @apply bg-primary text-white;
+}
+.button-sm {
+    @apply px-4 py-2;
+}
+.button-form {
+    @apply px-20 block mx-auto;
+}
+@media screen and (max-width: 768px) {
+    .button-narrow-mobile {
+        @apply px-0 block text-center py-3 w-full;
+    }
+}
+
+.quiz-result {
+    @apply border-l-8 border-secondary pl-8 pb-4;
+}
+.quiz-result:last-of-type {
+    @apply border-transparent;
+}
+.quiz-result:before {
+    position: absolute;
+    content: ' ';
+    width: 35px;
+    height: 35px;
+    border-radius:100%;
+    left: -4px;
+    top: -2px;
+    transform: translateX(-50%);
+    @apply bg-secondary;
+}
+
+.close-modal {
+    @apply text-primary transition top-0 right-0 absolute w-8 h-8 flex justify-center items-center text-2xl cursor-pointer;
+}
+.close-modal:hover {
+    @apply text-secondary;
+}
+@media (min-width: 768px) {
+    .close-modal {
+        transform: translate(50%, -50%);
+        @apply text-base text-white bg-secondary rounded-full;
+    }
+    .close-modal:hover {
+        @apply bg-primary text-white;
+    }
+}
+
+/* purgecss end ignore */
+@tailwind utilities;
+
+/* purgecss start ignore */
+@responsive {
+    .top-144px {
+        top: 144px;
+    }
+    .top-200px {
+        top: 200px;
+    }
+    .-top-64px {
+        top: -64px;
+    }
+    .-top-132px {
+        top: -132px;
+    }
+
+    .-left-1\/4 {
+        left: -25%;
+    }
+    .-left-60 {
+        left: -15rem;
+    }
+    .left-20px {
+        left: 20px;
+    }
+    .left-auto {
+        left: auto;
+    }
+
+    .text-shadow-white {
+        text-shadow: white -2px 2px;
+    }
+    .text-shadow-white-md {
+        text-shadow: white -10px 10px;
+    }
+    .text-shadow-white-lg {
+        text-shadow: white -19px 10px;
+    }
+    .text-shadow-none {
+        text-shadow: none;
+    }
+
+    .absolute-center {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .reason-icon-position {
+        left: calc(50% - .5rem);
+        transform: translate(-50%, -50%);
+    }
+    .reason-icon-position-off {
+        left: auto;
+        transform: none;
+    }
+}
+/* purgecss end ignore */

@@ -1,0 +1,94 @@
+{% extends "layouts/oneColumn" %}
+
+{% block bodyClass %}interior resource tag-page{% endblock %}
+
+{% set parent = craft.entries.section('pages').slug(craft.app.request.segments|first).one() %}
+
+{% block top %}
+
+<section class="page-header" style="{% if parent.headerBackgroundColor|length %}background-color: {{ parent.headerBackgroundColor }};{% endif %}">
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				<h2>resource</h2>
+				<h1>{{ tag }}</h1>
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+
+	{% if parent.headerBackgroundImage|length %}
+	<div class="header-image" style="background: url('{{ parent.headerBackgroundImage.one().getUrl() }}') no-repeat {{ parent.headerBackgroundImagePosition }} / {{ parent.headerBackgroundImageSize }}; opacity: {{ parent.headerBackgroundImageOpacity }};"></div><!--header-image-->
+	{% endif %}
+</section><!--page-header-->
+
+<nav class="breadcrumbs" role="navigation">
+	<div class="row align-middle">
+		<div class="large-12 medium-12 small-12 columns">
+			{% include 'functions/breadcrumbs' %}
+		</div><!--columns-->
+	</div><!--row-->
+</nav><!--breadcrumbs-->
+
+{% endblock %}
+
+{% block main %}
+{% set tag = craft.tags.slug(tag).one() %}
+{% if not tag %}{% exit 404 %}{% endif %}
+<section class="page-section resource-section">
+	<div class="row section-row">
+		{% paginate craft.entries.section('resource').relatedTo(tag).orderBy('postDate DESC').limit(12) as info, posts %}
+		{% for post in posts %}
+		<resource class="large-4 medium-4 small-12 columns">
+			<div class="resource-post">
+				{% if post.resourceImage|length %}
+				<div class="post-image">
+					{% set img = post.resourceImage.one() %}
+					{% set imgCrop = { mode: 'crop', width: 800, height: 500, quality: 100 } %}
+					<a href="{{ post.url }}" title="{{ post.title }}">
+						<img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}">
+					</a>
+				</div><!--post-image-->
+				{% endif %}
+				<div class="post-content">
+					<span class="post-meta">
+						<span class="date">{{ post.postDate|date('M j, Y') }}</span>
+						{% for cat in post.resourceCategories.all() %}
+						<span class="categories">
+							<a href="{{ cat.url }}" title="{{ cat.title }}">{{ cat.title }}</a>
+						</span>
+						{% endfor %}
+					</span><!--post-meta-->
+					<h3><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
+					{% if post.resourceExcerpt|length %}
+					<p>{{ post.resourceExcerpt|chop(limit=20, unit='w') }}...</p>
+					{% endif %}
+					<a href="{{ post.url }}" title="{{ post.title }}" class="button small">Read More</a>
+				</div><!--post-content-->
+			</div><!--resource-post-->
+		</resource><!--columns-->
+		{% else %}
+		<div class="large-12 medium-12 small-12 columns">
+			<p>No posts could be found.</p>
+		</div>
+		{% endfor %}
+
+		{% if info.prevUrl or info.nextUrl %}
+		<nav class="large-12 medium-12 small-12 columns pagination">
+			<a class="button prev {{ not info.prevUrl ? 'unavailable' : '' }}" href="{{ info.prevUrl }}"></i> Prev</a>
+			{% for page, url in info.getPrevUrls(5) %}
+			<a class="button page" href="{{ url }}">{{ page }}</a>
+			{% endfor %}
+			<a class="button page current" href="#">{{ info.currentPage }}</a>
+			{% for page, url in info.getNextUrls(5) %}
+			<a class="button page" href="{{ url }}">{{ page }}</a>
+			{% endfor %}
+			<a class="button next {{ not info.nextUrl ? 'unavailable' : '' }}" href="{{ info.nextUrl }}">Next</a>
+		</nav>
+		{% endif %}
+	</div><!--row-->
+</section><!--section-content-->
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}

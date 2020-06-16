@@ -1,0 +1,23 @@
+<section class="page-header resouce">
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				<nav class="breadcrumbs" role="navigation">
+					<div class="row align-middle">
+						<div class="large-12 medium-12 small-12 columns">
+							{% include 'functions/breadcrumbs' %}
+						</div><!--columns-->
+					</div><!--row-->
+				</nav><!--breadcrumbs-->
+				{% if entry.headerHeading|length %}
+				<h1>{{ entry.headerHeading }}</h1>
+				{% else %}
+				<h1>{{ entry.title }}</h1>
+				{% endif %}
+				{% if entry.headerSubHeading|length %}
+				<h2>{{ entry.headerSubHeading|replace({'<p>':'', '</p>':''})|raw }}</h2>
+				{% endif %}
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--page-header-->

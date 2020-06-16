@@ -1,0 +1,8 @@
+{% if entry.includeCalendlyStyles %}
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+{% endif %}
+{% if entry.codeBlock|length %}
+    <span class="code-block">
+        {{ entry.codeBlock|raw }}
+    </span><!--code-block-->
+{% endif %}

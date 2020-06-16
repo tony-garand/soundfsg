@@ -1,0 +1,8 @@
+<div class="sidebar-header">
+	<h4>Tags</h4>
+</div><!--sidebar-header-->
+<div class="sidebar-content resource-tags">
+	{% for tag in craft.tags.group('resourceTags').all() %}
+		<a href="{{ url('article/tags/'~tag) }}" title="{{ tag.title }}"> <span class="post-tag">{{ tag.title }}</span></a>
+	{% endfor %}
+</div><!--sidebar-content-->

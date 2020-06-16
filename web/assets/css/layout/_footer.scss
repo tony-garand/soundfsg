@@ -1,0 +1,99 @@
+/* Footer */
+
+#footer {
+	text-align: left;
+	background-color: $color-extra;
+	h3 {
+		color: $color-white;
+		font-size: 1rem;
+		font-weight: $font-primary-semibold;
+		text-transform: uppercase;
+		letter-spacing: .02rem;
+	}
+	p {
+		color: lighten($color-white, 10%);
+		font-size: 0.875rem;
+	}
+	ul {
+		padding: 0; margin: 0;
+		list-style: none;
+	}
+	a {
+		color: $color-white;
+		font-weight: $font-primary-bold;
+		&:hover {
+			color: $color-primary;
+		}
+	}
+	.footer-top {
+		padding: 100px 0 60px 0;
+		@media screen and (max-width: $responsive-small) { padding: 100px 0 0 0; }
+		.content-block {
+			@media screen and (max-width: $responsive-medium) { margin-bottom: 30px; }
+		}
+		ul li {
+			padding: 0 0 10px 0;
+			a {
+				font-size: 20px;
+			}
+		}
+		.socialnav {
+			padding-bottom: 50px;
+			@media screen and (max-width: $responsive-small) { padding-bottom: 20px; }
+			ul li {
+				display: inline-block;
+				a {
+					width: 30px; height: 30px;
+					padding: 0; margin-right: 5px;
+					color: $color-white;
+					line-height: 30px;
+					font-weight: $font-primary-bold;
+				}
+				&:last-child a {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+	.footer-bottom {
+		padding: 40px 0 80px 0;
+		font-size: 0.8125rem;
+		color: $color-white;
+		@media screen and (max-width: $responsive-small) {padding: 0 0 40px 0; }
+		.idd-brand-section{
+			text-align: right;
+			@media screen and (max-width: $responsive-medium) { text-align: left; }
+		}
+		.copyright {
+			ul li {
+				margin-right: 10px;
+				display: inline-block;
+				@media screen and (max-width: $responsive-small) { 	display: block; }
+			}
+			a {
+				font-size: .825rem;
+				font-weight: $font-primary-bold;
+			}
+		}
+		.idd-brand {
+			text-align: right;
+			@media screen and (max-width: $responsive-medium) { text-align: center; margin-top: 20px; }
+			svg {
+                width: auto; height: 24px;
+				fill: lighten($color-white, 15%);
+                @include transition($transitions-primary);
+                &:hover {
+                    fill: $color-primary;
+                }
+            }
+		}
+		.idd-brand-section{
+				@media screen and (max-width: $responsive-small) { padding-top: 20px; padding-bottom: 50px; }
+		}
+	}
+}
+
+.made-by {
+	float: right; text-align:right;
+	@media screen and (max-width: $responsive-medium) { text-align: left; }
+}

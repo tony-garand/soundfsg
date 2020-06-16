@@ -1,0 +1,99 @@
+{% extends "layouts/oneColumn" %}
+
+{% block bodyClass %}interior article post-page{% endblock %}
+
+{% set parent = craft.entries.section('pages').slug(craft.app.request.segments).one() %}
+
+{% block top %}
+<section class="page-header" {% if entry.headerBackgroundColor|length %}style="background-color: {{ entry.headerBackgroundColor }};"{% endif %}>
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				<h1>{{ entry.title }}</h1>
+				<span class="categories">
+					{% if entry.resourceCategories|length %}
+					{% for cat in entry.resourceCategories.all() %}
+					<a href="{{ cat.url }}">{{ cat.title }}</a>
+					{% endfor %}
+					{% endif %}
+				</span>
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+	{% if entry.headerBackgroundImage|length %}
+		<div class="header-image" style="background: url('{{ entry.headerBackgroundImage.one().getUrl() }}') no-repeat {{ entry.headerBackgroundImagePosition }} / {{ entry.headerBackgroundImageSize }}; opacity: {{ entry.headerBackgroundImageOpacity }};"></div><!--header-image-->
+	{% else %}
+		<div class="header-image" style="background-image: url('{{ entry.articleImage.one().getUrl() }}');"></div><!--header-image-->
+	{% endif %}
+</section><!--page-header-->
+
+<nav class="breadcrumbs" role="navigation">
+	<div class="row align-middle">
+		<div class="large-12 medium-12 small-12 columns">
+			{% include 'functions/breadcrumbs' %}
+		</div><!--columns-->
+	</div><!--row-->
+</nav><!--breadcrumbs-->
+{% endblock %}
+
+{% block main %}
+
+<section class="page-section article-post-page">
+	<div class="row align-center">
+		<article class="large-9 medium-10 small-12 column">
+			<div class="post-content">
+				{{ entry.articleContent }}
+			</div><!--post-content-->
+			<footer class="post-footer">
+				<span class="post-tags">
+					{% for tag in craft.tags.group('resourceTags').relatedTo(entry).all() %}
+					<a href="{{ url('resources/tags/'~tag) }}" title="{{ tag.title }}"> {{ tag.title }}</a>
+					{% endfor %}
+				</span><!--post-tags-->
+			</footer><!--post-footer-->
+			<div class="post-author">
+				{% set img = entry.author.authorImage %}
+				{% if img %}
+				{% set img = img.one() %}
+				<span class="author-image">
+					<img src="{{ img.getUrl() }}" alt="{{ entry.author.getFullName|default(img.altText|default(img.title)) }}">
+				</span>
+				{% endif %}
+				<span class="author-content">
+					<h4>Author</h4>
+					<h5>
+						{% set authorName = entry.author.getFullName|length ? entry.author.getFullName : entry.author.username %}
+						<a href="../authors/{{ entry.author.username|url_encode }}" title="Posts by {{ authorName }}">
+							{{ authorName }}
+						</a>
+					</h5>
+					<h6>{{ entry.author.authorTitle }}</h6>
+					<p>{{ entry.author.authorBio }}</p>
+				</span>
+			</div><!--post-author-->
+		</article><!--article-post-->
+
+		<aside class="large-3 medium-10 small-12 column sidebar">
+			<div class="sidebar-block">
+				{% include 'includes/resource-recent' %}
+			</div><!--sidebar-block-->
+			{% if entry.resourceCategories|length %}
+			<div class="sidebar-block">
+				{% include 'includes/resource-categories' %}
+			</div><!--sidebar-block-->
+			{% endif %}
+			<div class="sidebar-block">
+				{% include 'includes/resource-archives' %}
+			</div><!--sidebar-block-->
+			<div class="sidebar-block">
+				{% include 'includes/resource-tags' %}
+			</div><!--sidebar-block-->
+		</aside><!--sidebar-->
+
+	</div><!--row-->
+</section><!--page-content-->
+{% endblock %}
+
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}

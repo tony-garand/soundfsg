@@ -1,0 +1,3 @@
+{% if entry.buttonText %}
+    <a href="{{ entry.buttonUrl }}" class="button no-arrow {{ entry.buttonSize ?? '' }} {{ entry.buttonStyle ?? '' }}" target="{{ entry.openLinkInNewWindow ? '_blank' : '_self' }}">{{ entry.buttonText }}</a>
+{% endif %}

@@ -1,0 +1,36 @@
+<div class="large-6 medium-10 small-12 columns">
+    <div class="column-content column-block">
+        <h2>Pages</h2>
+        {% set pages = craft.entries.section('pages').hiddenPage('not 1').all() %}
+        <ul>
+            {% nav entry in pages %}
+                <li>
+                    <a href="{{ entry.url }}">{{ entry.title }}</a>
+                    {% ifchildren %}
+                        <ul>
+                            {% children %}
+                        </ul>
+                    {% endifchildren %}
+                </li>
+            {% endnav %}
+        </ul>
+    </div><!--column-content-->
+</div><!--columns-->
+<div class="large-6 medium-10 small-12 columns">
+    <div class="column-content column-block">
+        <h2>Services</h2>
+        {% set services = craft.entries.section('services').hiddenPage('not 1').all() %}
+        <ul>
+            {% nav entry in services %}
+                <li>
+                    <a href="{{ entry.url }}">{{ entry.title }}</a>
+                    {% ifchildren %}
+                        <ul>
+                            {% children %}
+                        </ul>
+                    {% endifchildren %}
+                </li>
+            {% endnav %}
+        </ul>
+    </div><!--column-content-->
+</div><!--columns-->

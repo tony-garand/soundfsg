@@ -1,0 +1,6 @@
+{% set embed = craft.videoEmbedder.getEmbedUrl( entry.videoUrl, {autoplay: 0, rel: 0, theme: 'dark'}) %}
+{% if embed|length %}
+    <span id="video" class="video video-block">
+        <iframe src="{{ embed }}"></iframe>
+    </span>
+{% endif %}

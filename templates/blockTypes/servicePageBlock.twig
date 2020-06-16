@@ -1,0 +1,16 @@
+{% for link in entry.serviceLink.all() %}
+  <a href="{{ link.url }}">
+    <div class="service-block-item">
+       <div class="service-block-image" style="position:relative">
+       {% if entry.serviceImage|length %}
+            {% set img = entry.serviceImage.one() %}
+            {% set imgCrop = { mode: 'crop', width: 350, height: 200, quality: 100 } %}
+               <img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}">
+       {% endif %}
+      </div>
+       <div class="service-block-item-content">
+         <a class="button primary service-overview" href="{{ link.url }}">{{ entry.serviceHeading }}</a>
+       </div>
+    </div>
+  </a>
+{% endfor %}

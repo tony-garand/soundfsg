@@ -1,0 +1,30 @@
+{% set seg = "" %}
+{% set pages = [] %}
+{% set parent = '' %}
+{% for segment in craft.app.request.segments  %}
+    {% set seg = seg ~ '/' ~ segment %}
+    {% set page = craft.entries.uri(seg|trim('/')).one() %}
+    {% set pages = pages|merge({ (loop.index0):page}) %}
+    {% if not loop.last %}
+		{% set parent = page %}
+    {% endif %}
+{% endfor %}
+<ul>
+	<li>
+		<a href="/">Home</a>
+	</li>
+	{% for page in pages %}
+		{% if page.url is defined and page.title is defined %}
+			{% if not loop.last %}
+			<li class="active">
+				<a href="{{ page.url|default('#') }}">{{ page.title|default('') }}</a>
+			</li>
+			{% else %}
+			<li>
+				<span>{{ page.title|default('') }}</span>
+			</li>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+	</li>
+</ul>

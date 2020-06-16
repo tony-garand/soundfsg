@@ -1,0 +1,13 @@
+<div class="sidebar-header">
+	<h4>Categories</h4>
+</div><!--sidebar-content-->
+<div class="sidebar-content resource-categories">
+	<ul>
+		{% for cat in craft.categories.group('resourceCategories').all() %}
+		{% set entryCount = craft.entries.relatedTo(cat).count() %}
+		<li>
+			<a href="{{ cat.url }}"><span>{{ cat.title }}</span> <span class="post-count">{{ entryCount }}</span></a>
+		</li>
+		{% endfor %}
+	</ul>
+</div><!--sidebar-content-->

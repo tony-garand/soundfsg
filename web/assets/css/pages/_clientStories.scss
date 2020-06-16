@@ -1,0 +1,19 @@
+.client-story-intro {
+  column-count:2;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 40px;
+  @media screen and (max-width: $responsive-small) { column-count:1; }
+}
+.client-story-intro-section {
+  padding: 20px 0;
+}
+.clientBlock {
+  .client-left {
+    float: left;
+
+      @media screen and (max-width: $responsive-small) { margin-left: 0px !important;}
+  }
+  .client-right {
+    float: right;
+  }
+}

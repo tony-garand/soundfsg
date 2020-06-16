@@ -1,0 +1,64 @@
+{% extends "layouts/oneColumn" %}
+
+{% block bodyClass %}interior lead-page{% endblock %}
+
+{% block top %}
+<section class="page-header" {% if entry.headerBackgroundColor|length %}style="background-color: {{ entry.headerBackgroundColor }};"{% endif %}>
+	<div class="row align-middle align-center">
+		<div class="large-12 medium-12 small-12 columns">
+			<div class="header-content">
+				{% if entry.headerHeading|length %}
+				<h1>{{ entry.headerHeading }}</h1>
+				{% else %}
+				<h1>{{ entry.title }}</h1>
+				{% endif %}
+				{% if entry.headerSubHeading|length %}
+				<h2>{{ entry.headerSubHeading }}</h2>
+				{% endif %}
+			</div><!--header-content-->
+		</div><!--columns-->
+	</div><!--row-->
+
+	{% if entry.headerBackgroundImage|length %}
+	<div class="header-image" style="background: url('{{ entry.headerBackgroundImage.one().getUrl() }}') no-repeat {{ entry.headerBackgroundImagePosition }} / {{ entry.headerBackgroundImageSize }}; opacity: {{ entry.headerBackgroundImageOpacity }};"></div><!--header-image-->
+	{% endif %}
+</section><!--page-header-->
+
+<nav class="breadcrumbs" role="navigation">
+	<div class="row align-middle">
+		<div class="large-12 medium-12 small-12 columns">
+			{% include 'functions/breadcrumbs' %}
+		</div><!--columns-->
+	</div><!--row-->
+</nav><!--breadcrumbs-->
+{% endblock %}
+
+{% block main %}
+<section class="page-section">
+	<div class="row section-row">
+		<aside class="large-3 medium-4 medium-order-2 small-12 small-order-2 column sidebar">
+			{% for block in entry.pageSidebar.level(1).all() %}
+			<div class="sidebar-block">
+				{% for block in block.children.all() %}
+				<div class="sidebar-content">
+					{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+				</div><!--column-content-->
+				{% endfor %}
+			</div><!--sidebar-content-->
+			{% endfor %}
+		</aside><!--columns-->
+		<div class="large-9 medium-8 medium-order-1 small-12 small-order-1 column">
+			{% for block in entry.pageContent.level(1).all() %}
+			<div class="column-content">
+				{% for block in block.children.all() %}
+				{% include 'blockTypes/' ~ block.type with {'entry': block} %}
+				{% endfor %}
+			</div><!--column-content-->
+			{% endfor %}
+		</div><!--columns-->
+	</div><!--row-->
+</section><!--page-section-->
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{#
+	Note, this is the default template for all "Pages" page types.
+	This page will import the template based on entry.type
+#}
+{% set type = entry.type|default(category.group.handle|default('null-type')) %}
+{% set slug = entry.slug|default(category.slug|default('null-slug')) %}
+{% if type == 'null-type' %}
+	{% set type = craft.app.request.segments|first ~ '/' ~ craft.app.request.segments(2) %}
+{% endif %}
+
+{% include 'pageTypes/' ~ type %}

@@ -1,0 +1,63 @@
+{% extends "layouts/oneColumn" %}
+{% block bodyClass %}interior book post-page{% endblock %}
+{% set parent = craft.entries.section('pages').slug(craft.app.request.segments).one() %}
+{% block top %}
+<section class="page-header">
+	<nav class="breadcrumbs" role="navigation">
+		<div class="row align-middle">
+			<div class="large-12 medium-12 small-12 columns">
+				{% include 'functions/breadcrumbs' %}
+			</div><!--columns-->
+		</div><!--row-->
+	</nav><!--breadcrumbs-->
+</section><!--page-header-->
+{% endblock %}
+{% block main %}
+<section class="page-section book-post-page">
+	<div class="row align-center">
+		<article class="large-9 medium-10 small-12 column">
+			<div class="post-content">
+				<div class="large-6 medium-6 small-12" style="float:left">
+					{% if entry.bookImage|length %}
+					{% set img = entry.bookImage.one() %}
+					<div class="book-image">
+					  <img src="{{ img.url }}" alt="{{ img.title }}">
+					</div>
+					{% endif %}
+				</div><!--post-image-->
+				<div class="large-6 medium-6 small-12" style="float:right">
+					<div class="book-content">
+					<div>
+						<h1>{{ entry.title }}</h1>
+					</div><!--header-content-->
+					{{ entry.bookContent }}
+					{% if entry.bookLink|length %}
+							<div class="book-link">{{ entry.bookLink }}</div>
+					{% endif %}
+			  </div>
+			</div>
+		</article><!--article-post-->
+		<footer class="post-footer large-9 medium-10 small-12 column">
+			<div class="share-post" style="float:left;">
+				{% include 'components/socialMedia' %}
+			</div>
+			<div class="post-categories" style="float:right;">
+				{% include 'components/postCategories' %}
+			</div>
+		</footer><!--post-footer-->
+	</div><!--row-->
+	<div class="row align-center">
+		<div class="large-9 medium-10 small-12 column" style="margin:auto;">
+		{% include 'components/postAuthor' %}
+		</div>
+	</div><!--row-->
+	{% include 'includes/newsletter' %}
+	<!-- related -->
+	{% if entry.resourceCategories|length %}
+	{% include 'components/relatedResources' %}
+	{% endif %}
+</section><!--page-content-->
+{% endblock %}
+{% block bottom %}
+{% include 'includes/global-cta' %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% if entry.testimonyImage|length %}
+{% set img = entry.testimonyImage.one() %}
+{% set imgCrop = { mode: 'crop', width: 60, height: 60, quality: 100 } %}
+     <span class="circle-image"><img src="{{ img.url(imgCrop) }}" width="{{ imgCrop.width }}" height="{{ imgCrop.width }}" alt="{{ img.altText|default(img.title) }}"></span>
+{% endif %}
+{% if entry.testimonyText|length %}
+     {{ entry.testimonyText }}
+{% endif %}
+{% if entry.customerName|length %}
+     <h3>
+          <strong>{{ entry.customerName }}</strong>
+          {% if entry.customerCompany|length %}, {{ entry.customerCompany }}{% endif %}
+     </h3>
+{% endif %}

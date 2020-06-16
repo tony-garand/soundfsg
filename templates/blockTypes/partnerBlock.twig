@@ -1,0 +1,9 @@
+{% set img = entry.partnerLogo.one() %}
+{% set imgCrop = { mode: 'fit', width: 200, quality: 100 } %}
+{% if entry.partnerUrl|length %}
+     <a href="{{ entry.partnerUrl }}" target="_blank" rel="nofollow">
+          <img src="{{ img.url }}" alt="{{ img.title }}">
+     </a>
+{% else %}
+     <img src="{{ partnerUrl.url }}" alt="{{ img.title }}">
+{% endif %}

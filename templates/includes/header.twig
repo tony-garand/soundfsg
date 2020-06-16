@@ -1,0 +1,52 @@
+<header id="header" class="header" canvas="">
+	{% if header.headerSecondaryNav.value == 'headerWithSecondaryNavigation' %}
+	<div class="header-top">
+		<div class="row align-middle">
+			<div class="large-12 medium-12 small-12 columns">
+				{% if header.removeSocialIcons|length %}
+					{% if socialMedia.globalSocialMedia is defined and socialMedia.globalSocialMedia is not empty %}
+					<nav class="socialnav" role="navigation">
+						<ul>
+							{% for soc in socialMedia.globalSocialMedia.all() %}
+								<li><a href="{{ soc.socialMediaUrl }}" target="_blank" rel="nofollow"><i class="fa fa-{{ soc.socialMediaType }}" aria-hidden="true"></i></a></li>
+							{% endfor %}
+						</ul>
+					</nav>
+					{% endif %}
+				{% endif %}
+				{% if header.callUs|length %}
+				<span class="callus"><i class="material-icons md-14">call</i>{{ header.callUs|replace({'<p>':'', '</p>':''})|raw }}</span>
+				{% endif %}
+				<nav class="utilitynav" role="navigation">
+					{% include 'functions/utilitynav' %}
+				</nav><!--utilitynav-->
+			</div><!--columns-->
+		</div><!--row-->
+	</div><!--header-top-->
+	{% endif %}
+
+	<div class="header-middle">
+		<div class="row align-middle">
+			<div class="large-3 medium-4 small-6 columns">
+				<div class="brand">
+				{% if header.headerLogo|length %}
+					<a href="/" title="{{ siteName }}">
+						<img src="{{ header.headerLogo.one().getUrl() }}" alt="{{ siteName }}">
+					</a>
+				{% else %}
+					<a href="/" title="{{ siteName }}">{{ siteName }}</a>
+				{% endif %}
+				</div><!--brand-->
+			</div><!--columns-->
+
+			<div class="large-9 medium-8 small-6 columns">
+				<nav class="mainnav" role="navigation">
+					{% include 'functions/mainnav' %}
+				</nav><!--mainnav-->
+				<nav class="mobilenav" role="navigation">
+					{% include 'functions/mobilenav' %}
+				</nav><!--mainnav-->
+			</div><!--columns-->
+		</div><!--row-->
+	</div><!--header-bottom-->
+</header><!--header-->
