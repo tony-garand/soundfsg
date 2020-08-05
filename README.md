@@ -4,7 +4,7 @@
 <br />
 <img src="http://tonygarand.com/wp-content/uploads/2019/07/Site-Map-1.png">
 <br />
-<img src="http://tonygarand.com/wp-content/uploads/2019/07/Sound-Financial-Home-2-–-2.png">
+<img src="http://tonygarand.com/wp-content/uploads/2020/08/Sound-Financial-Home-2.png">
 
 
 ## Local set up
